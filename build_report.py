@@ -288,23 +288,10 @@ def build_person_html(person, generated_date):
 
 SIMPLE_CSS = """
 :root{
-  --paper: #fdfcfa; --ink: #1a1a1a; --ink-soft: #444;
-  --line: #e4e1d8; --accent: #2f5d54;
-  --uwaga-fg:#8a3b1f; --uwaga-bg:#fbeee6; --uwaga-bd:#d98a5f;
-  --lekarz-fg:#1f4e8a; --lekarz-bg:#e9f1fb; --lekarz-bd:#5f93d9;
-  --styl-fg:#2c6e2c; --styl-bg:#eef7ec; --styl-bd:#6fb85f;
-  --dobra-fg:#8a6d1f; --dobra-bg:#fdf6e3; --dobra-bd:#d9b95f;
-  --ciekaw-fg:#5c3d8a; --ciekaw-bg:#f2ecfb; --ciekaw-bd:#a583d9;
+  --paper: #ffffff; --ink: #000000; --ink-soft: #333333; --line: #000000; --line-soft: #999999;
 }
 @media (prefers-color-scheme: dark){
-  :root{
-    --paper:#181614; --ink:#f0ede6; --ink-soft:#c7c2b7; --line:#3a3630; --accent:#7fb8a8;
-    --uwaga-fg:#f0b499; --uwaga-bg:#3a2419; --uwaga-bd:#d98a5f;
-    --lekarz-fg:#a9c8f0; --lekarz-bg:#182338; --lekarz-bd:#5f93d9;
-    --styl-fg:#b3e0a6; --styl-bg:#1c2c19; --styl-bd:#6fb85f;
-    --dobra-fg:#f0dca6; --dobra-bg:#332a15; --dobra-bd:#d9b95f;
-    --ciekaw-fg:#d3b9f0; --ciekaw-bg:#271c38; --ciekaw-bd:#a583d9;
-  }
+  :root{ --paper:#000000; --ink:#ffffff; --ink-soft:#dddddd; --line:#ffffff; --line-soft:#888888; }
 }
 *{ box-sizing: border-box; }
 body{
@@ -313,49 +300,57 @@ body{
   line-height: 1.6; font-size: 17px;
 }
 .page{ max-width: 760px; margin: 0 auto; padding: 40px 30px 60px; }
+.cover{ border-bottom: 3px solid var(--line); padding-bottom: 16px; margin-bottom: 8px; }
 .cover h1{
   font-family: Georgia, "Iowan Old Style", serif; font-size: 34px; margin: 6px 0 4px;
 }
-.cover-sub{ color: var(--ink-soft); font-size: 15px; margin-bottom: 18px; }
+.cover-sub{ color: var(--ink-soft); font-size: 15px; margin-bottom: 4px; letter-spacing: .03em; text-transform: uppercase; }
 .intro{
-  background: var(--accent); color: #fff; border-radius: 12px; padding: 18px 20px;
-  font-size: 15.5px; margin-bottom: 28px; line-height: 1.55;
+  border: 2px solid var(--line); border-radius: 8px; padding: 18px 20px;
+  font-size: 15.5px; margin: 24px 0 28px; line-height: 1.55;
 }
 .intro strong{ font-size: 16px; }
 h2.sec-title{
   font-size: 22px; margin: 34px 0 14px; padding-bottom: 6px;
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid var(--line); display: flex; align-items: baseline; gap: 10px;
 }
+h2.sec-title .sec-icon{ font-size: 22px; }
 .item{
-  border-left: 6px solid var(--bd); background: var(--bg); color: var(--fg);
-  border-radius: 10px; padding: 16px 18px; margin-bottom: 14px;
-  break-inside: avoid;
+  border: 1.5px solid var(--line); border-radius: 8px; padding: 16px 18px; margin-bottom: 14px;
+  break-inside: avoid; position: relative;
 }
+/* rozroznienie sekcji BEZ koloru - poprzez styl/grubosc lewej krawedzi */
+.item.sec-uwaga{ border-left: 8px double var(--line); }
+.item.sec-lekarz{ border-left: 8px solid var(--line); }
+.item.sec-styl{ border-left: 8px dashed var(--line); }
+.item.sec-dobra{ border-left: 8px solid var(--line); border-style: solid; }
+.item.sec-dobra:before{
+  content: "✓"; position: absolute; top: 14px; right: 16px; font-size: 18px; font-weight: 700;
+}
+.item.sec-ciekaw{ border-left: 8px dotted var(--line); }
 .item .item-head{ display:flex; align-items:center; gap:10px; margin-bottom: 6px; }
 .item .icon{ font-size: 22px; }
 .item .title{ font-weight: 700; font-size: 16.5px; color: var(--ink); }
 .item .text{ font-size: 15.5px; color: var(--ink-soft); }
 .empty-note{ color: var(--ink-soft); font-style: italic; font-size: 14.5px; }
 .footer-note{
-  margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line);
+  margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line-soft);
   font-size: 13.5px; color: var(--ink-soft); line-height: 1.6;
 }
 @page{ size: A4; margin: 16mm 14mm; }
 @media print{
-  :root{ --paper:#fff; --ink:#111; --ink-soft:#333; --line:#ccc; }
+  :root{ --paper:#fff; --ink:#000; --ink-soft:#222; --line:#000; --line-soft:#666; }
   body{ font-size: 14.5px; }
   .page{ max-width: none; padding: 0; }
-  .item{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .intro{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 """
 
 SECTION_META = {
-    "uwaga": ("⚠️ Na co warto zwrócić uwagę", "uwaga"),
-    "lekarz": ("💊 Co warto powiedzieć lekarzowi lub farmaceucie", "lekarz"),
-    "styl_zycia": ("🍽️ Styl życia i codzienne nawyki", "styl"),
-    "dobra_wiadomosc": ("✅ Dobre wiadomości", "dobra"),
-    "ciekawostka": ("✨ Ciekawostki", "ciekaw"),
+    "uwaga": ("Na co warto zwrócić uwagę", "⚠️", "sec-uwaga"),
+    "lekarz": ("Co warto powiedzieć lekarzowi lub farmaceucie", "💊", "sec-lekarz"),
+    "styl_zycia": ("Styl życia i codzienne nawyki", "🍽️", "sec-styl"),
+    "dobra_wiadomosc": ("Dobre wiadomości", "✅", "sec-dobra"),
+    "ciekawostka": ("Ciekawostki", "✨", "sec-ciekaw"),
 }
 
 def build_simple_person_html(person, generated_date):
@@ -387,19 +382,19 @@ def build_simple_person_html(person, generated_date):
         buckets[adv["section"]].append((adv["icon"], adv["title"], adv["text"]))
 
     body_parts = []
-    for key, (heading, css_key) in SECTION_META.items():
+    for key, (heading, sec_icon, css_class) in SECTION_META.items():
         items = buckets[key]
         if not items:
             continue
         rows = "\n".join(f'''
-          <div class="item" style="--bg:var(--{css_key}-bg); --fg:var(--{css_key}-fg); --bd:var(--{css_key}-bd);">
+          <div class="item {css_class}">
             <div class="item-head">
               <span class="icon">{icon}</span>
               <span class="title">{esc(title)}</span>
             </div>
             <div class="text">{esc(text)}</div>
           </div>''' for icon, title, text in items)
-        body_parts.append(f'<h2 class="sec-title">{heading}</h2>\n{rows}')
+        body_parts.append(f'<h2 class="sec-title"><span class="sec-icon">{sec_icon}</span>{esc(heading)}</h2>\n{rows}')
 
     if not body_parts:
         body_parts.append('<p class="empty-note">Dla dostępnych danych nie znaleziono punktów wymagających uwagi w tej uproszczonej wersji — sprawdź pełny raport szczegółowy.</p>')
