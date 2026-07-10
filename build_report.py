@@ -219,8 +219,11 @@ def render_category(cat, rows):
 
 def build_person_html(person, generated_date):
     name = person["name"]
-    results = person["results"]
+    all_results = person["results"]
     apoe = person.get("apoe")
+
+    untested_count = sum(1 for r in all_results if r["risk"] in ("brak_danych", "brak_odczytu"))
+    results = [r for r in all_results if r["risk"] not in ("brak_danych", "brak_odczytu")]
 
     categories = {}
     for r in results:
@@ -264,7 +267,7 @@ def build_person_html(person, generated_date):
     <div class="cover-meta">
       <span>Wygenerowano: {esc(generated_date)}</span>
       <span>Zanalizowanych markerow: {person["total_snps"]:,}</span>
-      <span>Wariantow w bazie: {len(results)}</span>
+      <span>Wariantow z wynikiem: {len(results)}</span>
     </div>
     <div class="disclaimer">
       To narzedzie NIE jest diagnostyka medyczna. Wiekszosc opisanych tu wariantow to
@@ -280,7 +283,8 @@ def build_person_html(person, generated_date):
   {sections}
 
   <footer class="page-footer">
-    Raport wygenerowany lokalnie na podstawie surowych danych AncestryDNA — wylacznie do uzytku prywatnego/edukacyjnego.
+    Raport wygenerowany lokalnie na podstawie surowych danych AncestryDNA — wylacznie do uzytku prywatnego/edukacyjnego.<br>
+    {untested_count} wariantow z bazy pominieto w tym raporcie, bo nie sa mierzone na tym chipie (brak danych/no-call) — nie pokazujemy pustych wynikow.
   </footer>
 </div>
 </body>
@@ -332,6 +336,8 @@ h2.sec-title .sec-icon{ font-size: 22px; }
 .item .icon{ font-size: 22px; }
 .item .title{ font-weight: 700; font-size: 16.5px; color: var(--ink); }
 .item .text{ font-size: 15.5px; color: var(--ink-soft); }
+.item .extra{ font-size: 14px; color: var(--ink-soft); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line-soft); }
+.item .extra-label{ font-weight: 700; color: var(--ink); }
 .empty-note{ color: var(--ink-soft); font-style: italic; font-size: 14.5px; }
 .footer-note{
   margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line-soft);
@@ -353,6 +359,20 @@ SECTION_META = {
     "ciekawostka": ("Ciekawostki", "✨", "sec-ciekaw"),
 }
 
+EXTRA_LABELS = {
+    "origin": ("🌍", "Pochodzenie"),
+    "diet": ("🍽️", "Dieta"),
+    "body_mind": ("🧭", "Ciało / umysł / hobby"),
+}
+
+def render_extras(item):
+    lines = []
+    for key in ("origin", "diet", "body_mind"):
+        if item.get(key):
+            icon, label = EXTRA_LABELS[key]
+            lines.append(f'<div class="extra"><span class="extra-label">{icon} {esc(label)}:</span> {esc(item[key])}</div>')
+    return "\n".join(lines)
+
 def build_simple_person_html(person, generated_date):
     name = person["name"]
     results_by_rsid = {r["rsid"]: r for r in person["results"]}
@@ -363,15 +383,14 @@ def build_simple_person_html(person, generated_date):
     if apoe:
         interp = apoe["interpretation"]
         if "PODWYZSZONE" in interp:
-            buckets["uwaga"].append(("🧠", "Pamięć i mózg",
-                "Wyniki sugerują nieco wyższą genetyczną skłonność do problemów z pamięcią w starszym "
-                "wieku. To NIE oznacza, że choroba na pewno wystąpi. Warto: regularnie ćwiczyć umysł "
-                "(czytanie, krzyżówki, nauka nowych rzeczy), dbać o aktywność fizyczną, dobry sen i "
-                "zdrową dietę (dużo warzyw, ryby, mniej cukru) — to realnie zmniejsza ryzyko."))
+            buckets["uwaga"].append({"icon": "🧠", "title": "Pamięć i mózg",
+                "text": "Wyniki sugerują nieco wyższą genetyczną skłonność do problemów z pamięcią w starszym "
+                "wieku. To NIE oznacza, że choroba na pewno wystąpi — to sygnał, żeby dodatkowo o mózg zadbać.",
+                "diet": "Więcej warzyw, ryb, oliwy; mniej cukru i przetworzonego jedzenia (dieta śródziemnomorska ma tu najlepsze dowody naukowe).",
+                "body_mind": "Regularne ćwiczenie umysłu (czytanie, krzyżówki, nauka nowych rzeczy) i codzienny ruch fizyczny razem dają najlepszy efekt ochronny."})
         elif "OBNIZONE" in interp:
-            buckets["dobra_wiadomosc"].append(("🧠", "Pamięć i mózg",
-                "Wyniki genetyczne związane z ryzykiem Alzheimera są korzystne — nie ma podwyższonego "
-                "ryzyka związanego z tym konkretnym genem."))
+            buckets["dobra_wiadomosc"].append({"icon": "🧠", "title": "Pamięć i mózg",
+                "text": "Wyniki genetyczne związane z ryzykiem Alzheimera są korzystne — nie ma podwyższonego ryzyka związanego z tym konkretnym genem."})
 
     for adv in PLAIN_ADVICE:
         r = results_by_rsid.get(adv["rsid"])
@@ -379,7 +398,11 @@ def build_simple_person_html(person, generated_date):
             continue
         if r["risk"] not in adv.get("trigger_risks", []):
             continue
-        buckets[adv["section"]].append((adv["icon"], adv["title"], adv["text"]))
+        item = {"icon": adv["icon"], "title": adv["title"], "text": adv["text"]}
+        for key in ("origin", "diet", "body_mind"):
+            if adv.get(key):
+                item[key] = adv[key]
+        buckets[adv["section"]].append(item)
 
     body_parts = []
     for key, (heading, sec_icon, css_class) in SECTION_META.items():
@@ -389,17 +412,19 @@ def build_simple_person_html(person, generated_date):
         rows = "\n".join(f'''
           <div class="item {css_class}">
             <div class="item-head">
-              <span class="icon">{icon}</span>
-              <span class="title">{esc(title)}</span>
+              <span class="icon">{item["icon"]}</span>
+              <span class="title">{esc(item["title"])}</span>
             </div>
-            <div class="text">{esc(text)}</div>
-          </div>''' for icon, title, text in items)
+            <div class="text">{esc(item["text"])}</div>
+            {render_extras(item)}
+          </div>''' for item in items)
         body_parts.append(f'<h2 class="sec-title"><span class="sec-icon">{sec_icon}</span>{esc(heading)}</h2>\n{rows}')
 
     if not body_parts:
         body_parts.append('<p class="empty-note">Dla dostępnych danych nie znaleziono punktów wymagających uwagi w tej uproszczonej wersji — sprawdź pełny raport szczegółowy.</p>')
 
     content = "\n".join(body_parts)
+    synthesis = render_synthesis(buckets)
 
     return f'''<!doctype html>
 <html lang="pl">
@@ -420,24 +445,82 @@ def build_simple_person_html(person, generated_date):
 
   <div class="intro">
     <strong>Co to jest ten dokument?</strong><br>
-    To uproszczone podsumowanie wyników testu DNA — bez trudnych słów, tylko konkretne
-    wskazówki: na co warto zwrócić uwagę, co powiedzieć lekarzowi i co można zrobić
-    już dziś. To NIE jest diagnoza choroby — to tylko wskazówki oparte na badaniach
-    naukowych dotyczących dużych grup ludzi. Ostateczne decyzje zawsze warto
-    skonsultować z lekarzem rodzinnym.
+    To Twoje wyniki DNA po ludzku — bez trudnych słów. Zebraliśmy z Twojego testu to, co
+    naprawdę warto wiedzieć: na co uważać, co powiedzieć lekarzowi i co możesz zacząć robić
+    już dziś, żeby czuć się lepiej i żyć dłużej w dobrym zdrowiu. Geny to nie wyrok — to
+    najczęściej niewielkie przechylenie szali, na które masz realny wpływ przez to, co jesz,
+    ile się ruszasz i jak dbasz o siebie. Twoja rodzina chce mieć Cię przy sobie jak najdłużej
+    — dlatego ten dokument to nie straszenie, tylko konkretna, dobra wiadomość: wiesz już,
+    na czym się skupić.
   </div>
 
   {content}
 
+  {synthesis}
+
   <div class="footer-note">
-    Pełny, szczegółowy raport techniczny (z nazwami genów i wynikami badań) znajduje się
-    w osobnym pliku. Ten dokument to jego uproszczona wersja, przygotowana z myślą o
-    łatwym wydruku na kartce A4 i czytelności dla każdego, niezależnie od wiedzy
-    o genetyce.
+    Pełny, szczegółowy raport techniczny (z nazwami genów i wynikami badań naukowych)
+    znajduje się w osobnym pliku — dla dzieci/rodziny, które chcą zobaczyć wszystkie
+    szczegóły. Ten dokument to jego uproszczona wersja, przygotowana z myślą o łatwym
+    wydruku na kartce A4 i czytelności dla każdego, niezależnie od wiedzy o genetyce.
   </div>
 </div>
 </body>
 </html>'''
+
+def render_synthesis(buckets):
+    uwaga_titles = [it["title"] for it in buckets["uwaga"]]
+    styl_titles = [it["title"] for it in buckets["styl_zycia"]]
+
+    personal_bits = []
+    if uwaga_titles:
+        personal_bits.append(
+            "W Twoim wyniku szczególnie warto popilnować: " + ", ".join(uwaga_titles) + "."
+        )
+    if styl_titles:
+        personal_bits.append(
+            "Codzienne nawyki, na które warto zwrócić uwagę: " + ", ".join(styl_titles) + "."
+        )
+    personal_html = ""
+    if personal_bits:
+        personal_html = '<div class="item sec-lekarz"><div class="text">' + " ".join(esc(b) for b in personal_bits) + "</div></div>"
+
+    return f'''
+  <h2 class="sec-title"><span class="sec-icon">🌿</span>Jak żyć długo, spokojnie i w zdrowiu</h2>
+  <p style="font-size:15.5px;">
+    Żaden gen nie decyduje samodzielnie o długości ani jakości życia — ale nauka dość dobrze
+    wie już, co naprawdę pomaga, niezależnie od wyniku testu DNA:
+  </p>
+  <div class="item sec-styl">
+    <div class="item-head"><span class="icon">🥗</span><span class="title">Jedzenie</span></div>
+    <div class="text">Więcej warzyw, ryb, oliwy i pełnoziarnistych produktów; mniej cukru,
+    słodkich napojów i wysoko przetworzonego jedzenia. Nie chodzi o restrykcyjną dietę —
+    wystarczy, żeby zdrowe jedzenie było w domu częściej niż niezdrowe.</div>
+  </div>
+  <div class="item sec-styl">
+    <div class="item-head"><span class="icon">🚶</span><span class="title">Ruch</span></div>
+    <div class="text">Codzienny spacer (nawet 20-30 minut) daje więcej korzyści zdrowotnych niż
+    większość suplementów razem wziętych — obniża ryzyko cukrzycy, chorób serca, a nawet
+    poprawia pamięć.</div>
+  </div>
+  <div class="item sec-styl">
+    <div class="item-head"><span class="icon">😴</span><span class="title">Sen i spokój</span></div>
+    <div class="text">Regularne godziny snu (7-8h) i mniej stresu to jedne z najlepiej
+    potwierdzonych czynników długowieczności — ważniejsze niż niejeden lek.</div>
+  </div>
+  <div class="item sec-dobra">
+    <div class="item-head"><span class="icon">👨‍👩‍👧‍👦</span><span class="title">Rodzina i rozmowa</span></div>
+    <div class="text">Bliskie relacje rodzinne i towarzyskie to jeden z najsilniejszych, wielokrotnie
+    potwierdzonych czynników długiego życia — silniejszy niż wiele czynników medycznych. Czasem
+    warto też rozmawiać wprost o tym, co komu pomaga się dobrze czuć (np. czy ktoś lepiej
+    funkcjonuje w spokoju, a ktoś w ruchu i zmianie) — to ułatwia wzajemne zrozumienie, a nie
+    jest niczyją "winą".</div>
+  </div>
+  {personal_html}
+  <p style="font-size:14px; font-style:italic; margin-top:16px;">
+    Nawet niewielka, ale trwała zmiana jednego nawyku — więcej ruchu, mniej cukru, regularny
+    sen — realnie się liczy. Nie trzeba zmieniać wszystkiego naraz.
+  </p>'''
 
 if __name__ == "__main__":
     with open("report_data.json", encoding="utf-8") as f:
