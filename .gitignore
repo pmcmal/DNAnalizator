@@ -1,0 +1,10 @@
+# Surowe dane DNA i wygenerowane raporty - dane osobowe/zdrowotne, NIGDY nie commitowac
+*.zip
+mama/
+tata/
+report_data.json
+raport_mama.html
+raport_tata.html
+
+__pycache__/
+*.pyc
