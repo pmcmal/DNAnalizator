@@ -439,3 +439,158 @@ COMBO_APOE = {
         ("CT", "CT"): "e2/e4 (rzadkie, niejednoznaczne) - mieszany profil, zwykle traktowany jako w przyblizeniu neutralny/lekko podwyzszony",
     }
 }
+
+# ---------------------------------------------------------------------------
+# WARSTWA "PROSTY JEZYK" - dla uproszczonego raportu dla os. starszych/
+# niewtajemniczonych. Zaden zargon (bez "genotyp", "homozygota", "rsID").
+# Kazdy wpis pokazuje sie w uproszczonym raporcie TYLKO gdy poziom ryzyka danej
+# osoby (pole "risk" z analizy) znajduje sie w "trigger_risks".
+# section: "uwaga" (na co uwazac) / "lekarz" (co powiedziec lekarzowi) /
+#          "styl_zycia" (dieta/nawyki) / "dobra_wiadomosc" / "ciekawostka"
+# ---------------------------------------------------------------------------
+PLAIN_ADVICE = [
+    {
+        "rsid": "rs6025", "section": "uwaga", "icon": "🩸",
+        "title": "Skrzepy krwi (zakrzepica)",
+        "trigger_risks": ["podwyzszone", "wysokie"],
+        "text": "Organizm ma nieco większą skłonność do tworzenia zakrzepów krwi. Ważne żeby powiedzieć o tym lekarzowi przed: dłuższym unieruchomieniem (np. po operacji, długi lot samolotem), przy przepisywaniu hormonów (np. tabletki antykoncepcyjne, hormonalna terapia zastępcza). Warto się ruszać przy długim siedzeniu i pić dużo wody.",
+    },
+    {
+        "rsid": "rs1799963", "section": "uwaga", "icon": "🩸",
+        "title": "Skrzepy krwi (zakrzepica)",
+        "trigger_risks": ["podwyzszone", "wysokie"],
+        "text": "Podobnie jak wyżej — nieco większa skłonność do zakrzepów krwi. Warto poinformować lekarza, zwłaszcza przed operacjami lub długimi podróżami.",
+    },
+    {
+        "rsid": "rs9923231", "section": "lekarz", "icon": "💊",
+        "title": "Leki rozrzedzające krew (np. Warfaryna, Acenokumarol)",
+        "trigger_risks": ["info"],
+        "text": "Jeśli kiedykolwiek lekarz przepisze leki rozrzedzające krew (Warfaryna/Acenokumarol), warto wspomnieć, że wrażliwość na ten lek może być inna niż przeciętna — dawka powinna być dobierana ostrożnie, ze wzmożoną kontrolą na początku leczenia.",
+    },
+    {
+        "rsid": "rs1801133", "section": "styl_zycia", "icon": "🥗",
+        "title": "Kwas foliowy (witamina B9)",
+        "trigger_risks": ["lekko podwyzszone", "podwyzszone"],
+        "text": "Organizm gorzej przetwarza zwykły kwas foliowy z suplementów/wzbogaconej żywności. Warto: jeść dużo zielonych warzyw liściastych (szpinak, brokuły, sałata), a przy suplementacji (zwłaszcza kobiety planujące ciążę) pytać aptekarza/lekarza o formę 'metylofolian' zamiast zwykłego kwasu foliowego.",
+    },
+    {
+        "rsid": "rs1800562", "section": "uwaga", "icon": "⚙️",
+        "title": "Nadmiar żelaza w organizmie (hemochromatoza)",
+        "trigger_risks": ["wysokie"],
+        "text": "Organizm może gromadzić za dużo żelaza, co z czasem obciąża wątrobę, serce i stawy. Warto poprosić lekarza o zwykłe badanie krwi (żelazo, ferrytyna) — jeśli poziom jest za wysoki, leczenie jest proste (regularne oddawanie krwi/upusty krwi) i bardzo skuteczne, jeśli wykryte wcześnie.",
+    },
+    {
+        "rsid": "rs1799945", "section": "uwaga", "icon": "⚙️",
+        "title": "Nadmiar żelaza w organizmie",
+        "trigger_risks": ["podwyzszone"],
+        "text": "Niewielka skłonność do gromadzenia żelaza. Warto przy okazji badań krwi poprosić o sprawdzenie poziomu żelaza/ferrytyny raz na jakiś czas.",
+    },
+    {
+        "rsid": "rs671", "section": "styl_zycia", "icon": "🍷",
+        "title": "Reakcja na alkohol",
+        "trigger_risks": ["info"],
+        "text": "Organizm gorzej rozkłada alkohol — po piciu może pojawiać się silne czerwienienie twarzy, przyspieszone bicie serca, złe samopoczucie. To sygnał ciała, że alkohol szkodzi bardziej niż zwykle — regularne picie przy takiej reakcji wiąże się z podwyższonym ryzykiem raka przełyku, więc najlepiej mocno ograniczyć alkohol.",
+    },
+    {
+        "rsid": "rs16969968", "section": "styl_zycia", "icon": "🚬",
+        "title": "Palenie papierosów",
+        "trigger_risks": ["lekko podwyzszone", "podwyzszone"],
+        "text": "Osoby z tym wariantem, jeśli palą, mają zwykle większy 'głód' nikotyny i palą więcej papierosów — co dodatkowo zwiększa ryzyko raka płuc. Jeśli ktoś pali — to jeden z najlepszych możliwych argumentów, żeby rzucić (lub nie zaczynać). Jeśli nie pali — ten wariant nie ma żadnego znaczenia.",
+    },
+    {
+        "rsid": "rs7903146", "section": "uwaga", "icon": "🍬",
+        "title": "Cukrzyca typu 2",
+        "trigger_risks": ["podwyzszone", "wysokie"],
+        "text": "Nieco wyższa skłonność do cukrzycy typu 2. To ryzyko, na które mamy realny wpływ: utrzymanie prawidłowej wagi, regularny ruch (np. spacery), mniej cukru i słodkich napojów, oraz raz w roku badanie poziomu cukru we krwi (glukoza na czczo) — szczególnie po 40-50 roku życia.",
+    },
+    {
+        "rsid": "rs9939609", "section": "styl_zycia", "icon": "⚖️",
+        "title": "Skłonność do nadwagi",
+        "trigger_risks": ["lekko podwyzszone", "podwyzszone"],
+        "text": "Nieco większa genetyczna skłonność do przybierania na wadze. Dobra wiadomość: regularna aktywność fizyczna niemal całkowicie znosi ten efekt w badaniach naukowych — nawet codzienny spacer robi dużą różnicę.",
+    },
+    {
+        "rsid": "rs2187668", "section": "uwaga", "icon": "🌾",
+        "title": "Celiakia (nietolerancja glutenu)",
+        "trigger_risks": ["podwyzszone"],
+        "text": "Organizm ma podwyższoną gotowość układu odpornościowego do reagowania na gluten. To NIE znaczy, że celiakia na pewno wystąpi (u większości osób z tym wynikiem nigdy nie występuje) — ale jeśli pojawią się objawy jak bóle brzucha, wzdęcia, biegunki, niewyjaśnione zmęczenie — warto wspomnieć o tym lekarzowi i rozważyć badanie w kierunku celiakii.",
+    },
+    {
+        "rsid": "rs4988235", "section": "styl_zycia", "icon": "🥛",
+        "title": "Tolerancja mleka (laktoza)",
+        "trigger_risks": ["info"],
+        "text": "Sprawdź w szczegółowym raporcie, czy wynik wskazuje na tolerancję czy nietolerancję laktozy w wieku dorosłym — jeśli po mleku pojawiają się wzdęcia/biegunka, to prawdopodobnie nietolerancja laktozy, a nie alergia. Pomaga wtedy mleko bez laktozy lub produkty fermentowane (jogurt, kefir, sery dojrzewające).",
+    },
+    {
+        "rsid": "rs762551", "section": "styl_zycia", "icon": "☕",
+        "title": "Kawa i kofeina",
+        "trigger_risks": ["info"],
+        "text": "Sprawdź w szczegółowym raporcie tempo metabolizmu kofeiny. Przy wolnym metabolizmie: kofeina zostaje dłużej w organizmie — warto pić mniej kawy i unikać jej po południu/wieczorem (dla serca i dla snu).",
+    },
+    {
+        "rsid": "rs4149056", "section": "lekarz", "icon": "💊",
+        "title": "Leki na cholesterol (statyny)",
+        "trigger_risks": ["podwyzszone", "wysokie"],
+        "text": "Przy lekach na cholesterol (statyny, np. simwastatyna) może częściej występować ból/osłabienie mięśni. Warto wspomnieć o tym lekarzowi przy przepisywaniu takich leków — czasem wystarczy inna statyna lub niższa dawka.",
+    },
+    {
+        "rsid": "rs1057910", "section": "lekarz", "icon": "💊",
+        "title": "Metabolizm niektórych leków",
+        "trigger_risks": ["info"],
+        "text": "Organizm może inaczej niż przeciętnie przetwarzać niektóre leki (np. na rozrzedzenie krwi, przeciwbólowe, przeciwpadaczkowe). Warto o tym wspomnieć lekarzowi/farmaceucie przy wprowadzaniu nowego leku na stałe.",
+    },
+    {
+        "rsid": "rs1805007", "section": "styl_zycia", "icon": "☀️",
+        "title": "Wrażliwość skóry na słońce",
+        "trigger_risks": ["podwyzszone", "info"],
+        "text": "Skóra jest bardziej wrażliwa na słońce (łatwiej o oparzenia, piegi) i statystycznie wyższe jest ryzyko raka skóry przy dużej ekspozycji na słońce. Warto: używać kremu z filtrem (SPF 30-50), unikać opalania w największym słońcu (11-15), raz w roku obejrzeć znamiona u dermatologa.",
+    },
+    {
+        "rsid": "rs20541", "section": "uwaga", "icon": "🤧",
+        "title": "Alergie i astma",
+        "trigger_risks": ["podwyzszone", "lekko podwyzszone"],
+        "text": "Nieco wyższa skłonność do alergii, astmy, egzemy, kataru siennego. Jeśli występują nawracające problemy z oddychaniem/skórą/katarem — warto rozważyć konsultację alergologiczną.",
+    },
+    {
+        "rsid": "rs2282679", "section": "styl_zycia", "icon": "🥗",
+        "title": "Witamina D",
+        "trigger_risks": ["lekko podwyzszone ryzyko niedoboru", "info"],
+        "text": "Organizm może mieć niższy poziom witaminy D we krwi niż przeciętnie — dotyczy to bardzo wielu osób w Polsce, zwłaszcza zimą. Warto rozważyć suplementację witaminy D (szczególnie od października do kwietnia) i przy okazji badań krwi sprawdzić jej poziom.",
+    },
+    {
+        "rsid": "rs2802292", "section": "dobra_wiadomosc", "icon": "🎉",
+        "title": "Długowieczność",
+        "trigger_risks": ["info"],
+        "text": "Ten wynik wiąże się w licznych badaniach naukowych (w tym u stulatków w Japonii i Europie) z nieco lepszymi szansami na długie życie. To dobra wiadomość — mimo to styl życia ma dużo większe znaczenie niż ten jeden gen.",
+    },
+    {
+        "rsid": "rs1229984", "section": "dobra_wiadomosc", "icon": "🎉",
+        "title": "Ochrona przed nadużywaniem alkoholu",
+        "trigger_risks": ["info"],
+        "text": "Ten wariant wiąże się ze statystycznie niższym ryzykiem uzależnienia od alkoholu — organizm szybciej przetwarza alkohol na nieprzyjemny dla organizmu produkt uboczny, co naturalnie zniechęca do nadmiernego picia.",
+    },
+    {
+        "rsid": "rs1815739", "section": "ciekawostka", "icon": "🏃",
+        "title": "Typ sportowy",
+        "trigger_risks": ["info"],
+        "text": "To tzw. 'gen sprintera' — jeden wariant sprzyja bardziej dyscyplinom siłowo-szybkościowym (sprint, siłownia), drugi bardziej wytrzymałościowym (długie biegi, jazda na rowerze). Sprawdź szczegółowy raport, który to wariant — może pomóc dobrać rodzaj aktywności fizycznej, który sprawi więcej przyjemności.",
+    },
+    {
+        "rsid": "rs12913832", "section": "ciekawostka", "icon": "👁️",
+        "title": "Kolor oczu",
+        "trigger_risks": ["info"],
+        "text": "Ten gen w największym stopniu decyduje o kolorze oczu — niebieskim, brązowym lub czymś pomiędzy (zielony/orzechowy).",
+    },
+    {
+        "rsid": "rs17822931", "section": "ciekawostka", "icon": "👂",
+        "title": "Woszczyna uszna i zapach potu",
+        "trigger_risks": ["info"],
+        "text": "Ten gen decyduje o tym, czy woszczyna uszna jest mokra czy sucha, a przy okazji wpływa też na intensywność zapachu potu spod pach. Czysta ciekawostka bez znaczenia zdrowotnego.",
+    },
+    {
+        "rsid": "rs713598", "section": "ciekawostka", "icon": "👅",
+        "title": "Wyczuwanie goryczy",
+        "trigger_risks": ["info"],
+        "text": "Ten gen wpływa na to, jak mocno wyczuwa się gorzki smak (np. w brukselce, kapuście, grejpfrutach) — dlatego niektórzy naprawdę bardziej 'nie lubią' pewnych warzyw, to nie tylko kwestia gustu.",
+    },
+]
