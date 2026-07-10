@@ -1,5 +1,10 @@
 # DNAnalizator
 
+<details open>
+<summary><strong>🇵🇱 Polski</strong> (kliknij, aby zwinąć)</summary>
+
+<br>
+
 Lokalne narzędzie do analizy surowych danych DNA z testów typu AncestryDNA/23andMe
 pod kątem dobrze udokumentowanych w literaturze naukowej wariantów związanych ze
 zdrowiem, farmakogenomiką, cechami fizycznymi i stylem życia.
@@ -79,3 +84,94 @@ Aby dodać nowy wariant, dopisz wpis do listy `VARIANTS` w `variants_db.py`:
     "note": "Kontekst / sila dowodow / zrodlo"
 }
 ```
+
+</details>
+
+<details>
+<summary><strong>🇬🇧 English</strong> (click to expand)</summary>
+
+<br>
+
+A local tool for analyzing raw DNA data from consumer tests (AncestryDNA/23andMe)
+against a curated set of well-documented, research-backed variants related to
+health, pharmacogenomics, physical traits, and lifestyle.
+
+Generates a clean HTML report (ready to print/save as PDF from the browser)
+for each analyzed person.
+
+## ⚠️ Disclaimer
+
+**This tool is NOT medical diagnostics.** Most of the described variants are
+statistical risk factors with small to moderate effect sizes, based on
+published population studies (GWAS, PharmGKB, ClinVar, peer-reviewed literature
+including Nature/Nature Genetics/Science/PNAS). A genotype is not a sentence —
+most traits described here are highly polygenic and modified by lifestyle.
+Results do not replace medical consultation or genetic testing performed in a
+clinical setting by a certified laboratory.
+
+## 🔒 Privacy
+
+Raw DNA data and generated reports are personal data (in this case also health
+data) — **never commit them to the repository**, especially a public one.
+This repo's `.gitignore` excludes by default:
+
+- `*.zip` (downloaded AncestryDNA/23andMe archives)
+- `mama/`, `tata/` (folders with unpacked raw data)
+- `report_data.json`, `raport_*.html` (generated results)
+
+Keep your DNA data and generated reports strictly local.
+
+## How it works
+
+1. **Input**: a raw `AncestryDNA.txt` file (rsid / chromosome / position / allele1 / allele2).
+2. **`variants_db.py`**: a hand-curated database of known SNPs with
+   descriptions, grouped into categories (neurodegenerative diseases,
+   cardiovascular, metabolic, cancer, addictions, pharmacogenomics, physical
+   traits, sleep, longevity, and more).
+3. **`analyze.py`**: parses the raw data, matches genotypes against the
+   database (handling opposite-strand reads), and writes the result to
+   `report_data.json`.
+4. **`build_report.py`**: generates a readable, printable HTML report per
+   person from the data (`raport_<person>.html`).
+
+## Usage
+
+```bash
+# 1. Unzip the downloaded AncestryDNA archive into a folder, e.g. mama/ and tata/
+unzip dna-data-*.zip -d mama
+
+# 2. Run the analysis (edit the list of people/paths in analyze.py if needed)
+python analyze.py
+
+# 3. Generate the HTML reports
+python build_report.py
+
+# 4. Open raport_<person>.html in a browser and use Ctrl+P -> Save as PDF
+```
+
+## Confidence levels
+
+Every variant in the database has context attached via the `note` field —
+some are very well and repeatedly replicated effects (e.g. APOE/Alzheimer's,
+Factor V Leiden, eye color, MC1R), while others are curiosities with
+weaker/inconsistent replication (explicitly flagged in the description).
+Treat `note` as information about the strength of evidence, not just extra
+context.
+
+## Extending the variant database
+
+To add a new variant, append an entry to the `VARIANTS` list in `variants_db.py`:
+
+```python
+{
+    "rsid": "rsXXXXXXX", "gene": "GENE_NAME", "category": "Category",
+    "name": "Short variant description",
+    "genotypes": {
+        "AA": ("risk_level", "description for this genotype"),
+        ...
+    },
+    "note": "Context / strength of evidence / source"
+}
+```
+
+</details>
