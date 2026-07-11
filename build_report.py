@@ -238,7 +238,8 @@ def build_person_html(person, generated_date):
 
     cat_order = [
         "Choroby neurodegeneracyjne", "Zakrzepica / uklad krazenia", "Cukrzyca / metabolizm",
-        "Choroby metaboliczne", "Nowotwory", "Alergie / odpornosc", "Alergie / autoimmunologia",
+        "Choroby metaboliczne", "Watroba / alkohol", "Dna moczanowa / stawy",
+        "Tarczyca / autoimmunologia", "Nowotwory", "Alergie / odpornosc", "Alergie / autoimmunologia",
         "Farmakogenomika", "Metabolizm alkoholu / reakcje", "Metabolizm alkoholu / uzaleznienia",
         "Uzaleznienia", "Uzaleznienia / neurologia", "Neurologia / metabolizm",
         "Metabolizm / serce", "Wydolnosc fizyczna", "Sen", "Odczuwanie bolu",

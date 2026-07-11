@@ -87,7 +87,7 @@ VARIANTS = [
             "GA": ("lekko podwyzszone", "Ok. 65% normalnej aktywnosci enzymu - zwykle bez klinicznego znaczenia"),
             "AA": ("podwyzszone", "Ok. 30% normalnej aktywnosci enzymu - podwyzszony poziom homocysteiny mozliwy, rozwazyc suplementacje aktywnym folianem (metylofolian) zamiast kwasu foliowego, warto omowic z lekarzem zwlaszcza przy planowaniu ciazy"),
         },
-        "note": "Bardzo popularny wariant, szeroko badany ale efekt kliniczny czesto przeceniany w internecie - nie jest to choroba, tylko wariant metabolizmu."
+        "note": "Bardzo popularny wariant, szeroko badany ale efekt kliniczny czesto przeceniany w internecie - nie jest to choroba, tylko wariant metabolizmu. DODATKOWO (zweryfikowane, lipiec 2026): kontrolowane badanie kliniczne (McNulty i wsp., Circulation 2006) wykazalo, ze TYLKO homozygoty AA (dwie kopie wariantu, ~30% aktywnosci enzymu) odpowiadaja na suplementacje ryboflawiny (witamina B2, ok. 1.6mg/dz.) spadkiem homocysteiny (nawet do -22-40%) - u osob GG i GA (jedna kopia) suplementacja B2 nie dala efektu w tym badaniu. Ryboflawina jest kofaktorem samego enzymu MTHFR, wiec ma to sens biochemicznie, ale dotyczy WYLACZNIE genotypu AA - u nosicieli jednej kopii (GA) nie ma podstaw, by spodziewac sie tego samego efektu."
     },
     {
         "rsid": "rs1801131", "gene": "MTHFR A1298C", "category": "Metabolizm / serce",
@@ -437,6 +437,72 @@ VARIANTS = [
         },
         "note": "Jeden z najsilniej potwierdzonych wariantow zwiazanych z poziomem witaminy D we krwi."
     },
+    {
+        "rsid": "rs602662", "gene": "FUT2", "category": "Witaminy / metabolizm",
+        "name": "Status 'sekretora' - wplywa na ZMIERZONY poziom witaminy B12 we krwi",
+        "genotypes": {
+            "GG": ("info", "'Sekretor' - w badaniach populacyjnych zwiazany z NIZSZYM zmierzonym poziomem calkowitej witaminy B12 we krwi"),
+            "AG": ("info", "Posredni status sekretora - posredni zmierzony poziom B12"),
+            "AA": ("info", "'Nie-sekretor' - w badaniach populacyjnych zwiazany z WYZSZYM zmierzonym poziomem calkowitej witaminy B12 we krwi (srednio ok. 16-25% wyzszy)"),
+        },
+        "note": "WAZNE (zweryfikowane w niezaleznym procesie badawczym, lipiec 2026): efekt dziala przez frakcje B12 zwiazana z haptokoryna (tzw. holo-haptokoryna) - czyli wplywa na WYNIK BADANIA KRWI, a NIE na biologicznie aktywna, dostepna dla komorek frakcje (holo-transkobalamina), ktora u sekretorow i nie-sekretorow jest podobna (Fedosov i wsp., Human Molecular Genetics 2017/2018). Innymi slowy: 'sekretor' (GG) moze miec NIZSZY wynik badania B12 we krwi bez faktycznego niedoboru na poziomie komorek. Popularna w internecie porada, ze 'sekretorzy' (lub nosiciele okreslonego genotypu) potrzebuja wiekszej dawki, formy podjezykowej/w zastrzykach lub metylokobalaminy - NIE ma potwierdzenia w literaturze naukowej dla tego konkretnego genu. Jesli wystepuja objawy sugerujace niedobor B12 (problemy z pamiecia, drętwienie, zmeczenie) - decyduje faktyczny wynik badania krwi (B12, kwas metylomalonowy, homocysteina), nie ten gen."
+    },
+    {
+        "rsid": "rs1801222", "gene": "CUBN", "category": "Witaminy / metabolizm",
+        "name": "Wchlanianie witaminy B12 w jelicie (receptor kubilina)",
+        "genotypes": {
+            "GG": ("standardowe", "Zwiazany z wyzszym typowym poziomem witaminy B12 we krwi"),
+            "AG": ("info", "Posredni - jedna kopia wariantu zwiazanego z nizszym typowym poziomem B12"),
+            "AA": ("lekko podwyzszone", "Zwiazany z nizszym typowym poziomem witaminy B12 we krwi"),
+        },
+        "note": "WAZNE (zweryfikowane, lipiec 2026): CUBN koduje kubilinę - realny receptor odpowiedzialny za wchlanianie witaminy B12 (polaczonej z czynnikiem wewnetrznym) w koncowym odcinku jelita cienkiego. To mechanistycznie NAJBARDZIEJ wiarygodny z genow B12 w tym raporcie pod katem faktycznego wchlaniania (w odroznieniu od FUT2, ktory wplywa tylko na pomiar we krwi). Rzadkie, powazne mutacje w tym genie powoduja zespol Imerslund-Grasbeck wymagajacy wstrzykiwan B12 do konca zycia - ale to POSPOLITY wariant o wiele slabszym efekcie, nie ta choroba. Brak badan klinicznych potwierdzajacych, ze nosiciele tego wariantu potrzebuja innej formy/dawki B12 - to wciaz tylko wskazowka, nie regula. Hazra i wsp., Human Molecular Genetics 2009; potwierdzone w kohorcie islandzko-dunskiej (P=3.3x10^-75)."
+    },
+
+    # ---------------- WATROBA / ALKOHOL ----------------
+    {
+        "rsid": "rs58542926", "gene": "TM6SF2 (E167K)", "category": "Watroba / alkohol",
+        "name": "Ryzyko uszkodzenia watroby zwiazanego z alkoholem",
+        "genotypes": {
+            "CC": ("standardowe", "Typowe ryzyko stluszczenia/uszkodzenia watroby, w tym zwiazanego z alkoholem"),
+            "CT": ("podwyzszone", "Nosiciel jednej kopii wariantu - realnie podwyzszone ryzyko stluszczenia watroby, wloknienia i marskosci watroby zwiazanej z alkoholem w porownaniu do osob bez tego wariantu przy tym samym poziomie picia"),
+            "TT": ("wysokie", "Rzadkie (homozygota) - najwyzsze ryzyko w tej grupie, ale bardzo rzadkie w populacji europejskiej (czestosc allelu ok. 7-8%)"),
+        },
+        "note": "WAZNE (zweryfikowane w niezaleznym procesie badawczym z aktywnym poszukiwaniem sprzecznych dowodow, lipiec 2026): drugi najsilniej potwierdzony (po PNPLA3) gen ryzyka choroby watroby zwiazanej z alkoholem (Buch/Stickel/Trepo i wsp., Nature Genetics 2015, P=7.9x10^-10). WAZNA UWAGA: ten sam wariant T obniza jednoczesnie LDL/trojglicerydy i ryzyko sercowo-naczyniowe - to NIE jest jednoznacznie 'zly' wariant, tylko niekorzystny konkretnie dla watroby. NAJWAZNIEJSZY pojedynczy gen ryzyka watroby alkoholowej to PNPLA3 (rs738409) - ale ten SNP NIE jest mierzony na chipie AncestryDNA, wiec nie da sie go tu sprawdzic. Jesli w rodzinie regularnie spozywany jest alkohol, warto to potraktowac jako dodatkowy, realny argument za ograniczeniem picia i regularnym sprawdzaniem prob watrobowych (ALT, AST, GGTP), niezaleznie od wyniku tego pojedynczego genu."
+    },
+
+    # ---------------- DNA MOCZANOWA / STAWY ----------------
+    {
+        "rsid": "rs2231142", "gene": "ABCG2 (Q141K)", "category": "Dna moczanowa / stawy",
+        "name": "Poziom kwasu moczowego i ryzyko dny moczanowej",
+        "genotypes": {
+            "GG": ("standardowe", "Typowy poziom kwasu moczowego, standardowe ryzyko dny moczanowej"),
+            "GT": ("podwyzszone", "Nosiciel jednej kopii - transporter usuwajacy kwas moczowy dziala slabiej, podwyzszony poziom kwasu moczowego i ryzyko dny moczanowej"),
+            "TT": ("wysokie", "Dwie kopie wariantu - znaczaco slabszy transport kwasu moczowego, wyraznie podwyzszone ryzyko dny moczanowej (bolesne napady zapalenia stawow, czesto w duzym palcu u nogi)"),
+        },
+        "note": "Jeden z dwoch najsilniej i najszerzej potwierdzonych genow kwasu moczowego/dny na swiecie (obok SLC2A9, ktory nie jest mierzony na tym chipie), replikowany w dziesiatkach populacji (m.in. Dehghan i wsp., Lancet 2008; Kolz i wsp., PLoS Genetics 2009). WAZNE ZASTRZEZENIE: bolesne narosla/zmiany na stawach palcow (zwlaszcza stop) moga miec wiele przyczyn poza dna - choroba zwyrodnieniowa stawow (artroza, tzw. guzki Heberdena/Boucharda) jest znacznie CZESTSZA u starszych osob i ma zupelnie inne, w wiekszosci niegenetyczne przyczyny (zuzycie stawow). Ten gen NIE odroznia dny od artrozy - jedynie badanie krwi (poziom kwasu moczowego) i ocena lekarza/reumatologa moga to rozstrzygnac."
+    },
+
+    # ---------------- TARCZYCA / AUTOIMMUNOLOGIA ----------------
+    {
+        "rsid": "rs2476601", "gene": "PTPN22 (R620W)", "category": "Tarczyca / autoimmunologia",
+        "name": "Predyspozycja do chorob autoimmunologicznych (w tym tarczycy)",
+        "genotypes": {
+            "GG": ("standardowe", "Brak wariantu ryzyka - standardowe ryzyko chorob autoimmunologicznych zwiazane z tym genem"),
+            "AG": ("lekko podwyzszone", "Nosiciel jednej kopii - podwyzszone ryzyko chorob autoimmunologicznych (w tym Hashimoto, Graves-Basedow, cukrzyca typu 1, reumatoidalne zapalenie stawow, toczen)"),
+            "AA": ("podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie, choc nadal rzadkie (homozygota wystepuje rzadko)"),
+        },
+        "note": "Jeden z najslawniejszych i najlepiej potwierdzonych genow autoimmunologicznych u czlowieka (Bottini i wsp., Nature Genetics 2004, replikowany setki razy). Podwyzsza ryzyko calej grupy chorob autoimmunologicznych naraz (nie tylko tarczycy) - jesli w rodzinie juz wystepuje jedna choroba autoimmunologiczna, ten gen czesciowo tlumaczy dlaczego, ale NIE jest jedynym czynnikiem (dziesiatki innych genow + srodowisko). Uwaga: kierunek i sila efektu dla tego wpisu oparte na ugruntowanej wiedzy z literatury (nie byly ponownie weryfikowane w tej sesji przez zywe wyszukiwanie ze wzgledu na limit sesji) - zalecana niezalezna weryfikacja przy okazji kolejnej aktualizacji bazy."
+    },
+    {
+        "rsid": "rs965513", "gene": "FOXE1 (9q22.33)", "category": "Tarczyca / autoimmunologia",
+        "name": "Ryzyko guzkow tarczycy i raka brodawkowatego tarczycy",
+        "genotypes": {
+            "GG": ("standardowe", "Standardowe (nizsze w tej grupie) ryzyko guzkow tarczycy i raka brodawkowatego tarczycy"),
+            "AG": ("lekko podwyzszone", "Nosiciel jednej kopii - umiarkowanie podwyzszone ryzyko guzkow tarczycy/raka brodawkowatego tarczycy"),
+            "AA": ("podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie (ok. 1.75x na kopie allelu wg oryginalnego badania)"),
+        },
+        "note": "Wariant z Gudmundsson i wsp., Nature Genetics 2009 (region 9q22.33 blisko genu FOXE1) - jeden z pierwszych i najsilniej potwierdzonych powszechnych wariantow ryzyka raka tarczycy. WAZNE: to marker OGOLNEGO, POPULACYJNEGO ryzyka - w ZADEN sposob nie moze ocenic, czy KONKRETNY, juz istniejacy i monitorowany guzek jest lagodny czy zlosliwy. O tym decyduje wylacznie USG, biopsja i ocena endokrynologa/onkologa - ten gen tego nie zastapi i nie powinien wplywac na decyzje o dalszej diagnostyce ani jej odwlekac. Uwaga: kierunek efektu oparty na ugruntowanej wiedzy z literatury (nie byl ponownie weryfikowany w tej sesji przez zywe wyszukiwanie ze wzgledu na limit sesji) - zalecana niezalezna weryfikacja przy okazji kolejnej aktualizacji bazy."
+    },
 ]
 
 # Warianty do specjalnej, laczonej interpretacji (np. APOE)
@@ -541,6 +607,62 @@ PLAIN_ADVICE = [
         "trigger_risks": ["podwyzszone"],
         "text": "Organizm ma podwyższoną gotowość układu odpornościowego do reagowania na gluten. To NIE znaczy, że celiakia na pewno wystąpi (u większości osób z tym wynikiem nigdy nie występuje) — ale jeśli pojawią się objawy jak bóle brzucha, wzdęcia, biegunki, niewyjaśnione zmęczenie lub 'mgła mózgowa' — warto wspomnieć o tym lekarzowi i zrobić badanie krwi w kierunku celiakii, ZANIM samodzielnie wyeliminuje się gluten z diety (odstawienie glutenu przed badaniem może zafałszować wynik).",
         "origin": "HLA-DQ2.5 najczęstszy w populacjach europejskich, celiakia rzadsza w Azji Wschodniej.",
+    },
+    {
+        "rsid": "rs602662", "section": "lekarz", "icon": "🩺",
+        "title": "Witamina B12 — wynik badania krwi może być mylący",
+        "trigger_risks": ["info"],
+        "text": "Ten gen wpływa na to, ile wynosi standardowe badanie krwi 'witamina B12' — niezależnie od tego, ile B12 faktycznie dociera do komórek. Innymi słowy: wynik krwi może wyglądać nisko lub wysoko z powodu tego genu, a nie prawdziwego niedoboru. WAŻNE: popularna w internecie porada, że przez ten gen potrzeba większej dawki B12 albo specjalnej formy (podjęzykowa, zastrzyki, metylokobalamina) — NIE ma potwierdzenia naukowego. Jeśli występują objawy niedoboru B12 (problemy z pamięcią, dezorientacja, mrowienie/drętwienie rąk i nóg, silne zmęczenie) — najlepiej poprosić lekarza nie tylko o zwykłe B12, ale też o kwas metylomalonowy (MMA) lub homocysteinę — to dokładniej pokazuje rzeczywisty status, niezależnie od tego genu.",
+    },
+    {
+        "rsid": "rs1801222", "section": "lekarz", "icon": "🩺",
+        "title": "Wchłanianie witaminy B12 w jelicie",
+        "trigger_risks": ["info", "lekko podwyzszone"],
+        "text": "Ten gen odpowiada za realny mechanizm wchłaniania witaminy B12 w jelicie (nie tylko za wynik badania krwi, jak poprzedni). Wynik sugerujący słabsze wchłanianie to nadal tylko niewielka statystyczna skłonność, nie diagnoza. Jeśli występują objawy niedoboru B12 (problemy z pamięcią, dezorientacja, częste zapominanie, drętwienie rąk/nóg, silne zmęczenie) — to połączenie objawów + tego wyniku jest dobrym powodem, żeby poprosić lekarza o proste badanie krwi (B12, ewentualnie kwas metylomalonowy). To częsta i ODWRACALNA przyczyna problemów z pamięcią u starszych osób, łatwa do sprawdzenia i wyleczenia, jeśli faktycznie występuje.",
+    },
+    {
+        "rsid": "rs58542926", "section": "uwaga", "icon": "🍷",
+        "title": "Wątroba i alkohol",
+        "trigger_risks": ["podwyzszone", "wysokie"],
+        "text": "Ten gen realnie zwiększa ryzyko uszkodzenia wątroby (stłuszczenie, włóknienie, marskość) u osób regularnie pijących alkohol — przy tym samym poziomie picia, ryzyko jest wyższe niż u osoby bez tego wariantu. To nie znaczy, że uszkodzenie na pewno wystąpi, ale jest to konkretny, dodatkowy powód, żeby ograniczyć alkohol i raz w roku zrobić badanie prób wątrobowych (ALT, AST, GGTP) — zwłaszcza jeśli alkohol pojawia się w życiu regularnie, nie tylko okazjonalnie.",
+        "diet": "Unikaj: regularnego picia alkoholu, szczególnie w większych ilościach. Pomaga: dieta uboga w cukry proste i tłuszcze nasycone (dodatkowo obciążają wątrobę), kawa (w umiarkowanych ilościach wiąże się w badaniach z ochronnym działaniem na wątrobę).",
+    },
+    {
+        "rsid": "rs2231142", "section": "dobra_wiadomosc", "icon": "🦴",
+        "title": "Dna moczanowa (kwas moczowy)",
+        "trigger_risks": ["standardowe"],
+        "text": "To najsilniejszy powszechny gen ryzyka dny moczanowej — i wynik jest tu korzystny (standardowe ryzyko). Jeśli występują bolesne zmiany/narośla na stawach palców (zwłaszcza stóp), to na podstawie samej genetyki dna moczanowa jest mniej prawdopodobnym wyjaśnieniem niż np. choroba zwyrodnieniowa stawów — ale to nadal wymaga oceny lekarza/reumatologa i najlepiej prostego badania krwi (poziom kwasu moczowego), a nie zgadywania.",
+    },
+    {
+        "rsid": "rs2231142", "section": "uwaga", "icon": "🦴",
+        "title": "Dna moczanowa (kwas moczowy)",
+        "trigger_risks": ["podwyzszone", "wysokie"],
+        "text": "Ten gen podwyższa ryzyko wysokiego kwasu moczowego i dny moczanowej — bolesnych napadów zapalenia stawów, klasycznie w dużym palcu u nogi, ale też innych stawach stóp. Jeśli występują bolesne zmiany/narośla na stawach palców stóp — warto zrobić proste badanie krwi (kwas moczowy) i skonsultować się z lekarzem/reumatologiem.",
+        "diet": "Unikaj: alkoholu (zwłaszcza piwa), czerwonego mięsa i podrobów, słodzonych napojów (fruktoza podnosi kwas moczowy). Pomaga: dużo wody, produkty mleczne o obniżonej zawartości tłuszczu, wiśnie (w niektórych badaniach obniżają częstość napadów dny).",
+    },
+    {
+        "rsid": "rs2476601", "section": "dobra_wiadomosc", "icon": "🛡️",
+        "title": "Choroby autoimmunologiczne (w tym tarczycy)",
+        "trigger_risks": ["standardowe"],
+        "text": "To jeden z najsilniej potwierdzonych genów ryzyka chorób autoimmunologicznych (w tym Hashimoto/Graves-Basedowa) — i wynik jest tu korzystny. Jeśli w rodzinie już występuje choroba tarczycy lub inna autoimmunologiczna, to na podstawie tego akurat genu nie ma dodatkowego wytłumaczenia — przyczyna leży najpewniej gdzie indziej (dziesiątki innych genów + czynniki środowiskowe), co nie zmienia potrzeby dalszej opieki endokrynologicznej.",
+    },
+    {
+        "rsid": "rs2476601", "section": "uwaga", "icon": "🛡️",
+        "title": "Choroby autoimmunologiczne (w tym tarczycy)",
+        "trigger_risks": ["lekko podwyzszone", "podwyzszone"],
+        "text": "Ten gen podwyższa ryzyko całej grupy chorób autoimmunologicznych naraz — w tym zapalenia tarczycy typu Hashimoto i choroby Gravesa-Basedowa, ale też np. reumatoidalnego zapalenia stawów czy cukrzycy typu 1. Jeśli w rodzinie występuje już jedna choroba autoimmunologiczna, warto mieć na uwadze zwiększoną czujność na objawy innych (np. bóle/obrzęki stawów, nietypowe zmęczenie) i wspomnieć o tym lekarzowi rodzinnemu.",
+    },
+    {
+        "rsid": "rs965513", "section": "dobra_wiadomosc", "icon": "🦋",
+        "title": "Guzki tarczycy",
+        "trigger_risks": ["standardowe"],
+        "text": "Ten gen (jeden z najlepiej potwierdzonych wskaźników populacyjnego ryzyka guzków/raka tarczycy) pokazuje tu wynik korzystny — standardowe ryzyko. To dobra wiadomość w tle, ale NIE zastępuje regularnego monitorowania tarczycy, jeśli jest już prowadzone — kontynuuj zalecenia lekarza/endokrynologa bez zmian.",
+    },
+    {
+        "rsid": "rs965513", "section": "uwaga", "icon": "🦋",
+        "title": "Guzki tarczycy",
+        "trigger_risks": ["lekko podwyzszone", "podwyzszone"],
+        "text": "Ten gen wiąże się z nieco podwyższonym populacyjnym ryzykiem guzków tarczycy. BARDZO WAŻNE: to wynik dotyczący ogólnego, statystycznego ryzyka w populacji — w ŻADEN sposób nie mówi, czy jakikolwiek konkretny, już istniejący i monitorowany guzek jest łagodny czy złośliwy. O tym decyduje wyłącznie USG, biopsja i ocena endokrynologa. Ten wynik nie powinien ani uspokajać, ani niepokoić bardziej niż dotychczas — po prostu kontynuuj regularne kontrole, tak jak są już zaplanowane.",
     },
     {
         "rsid": "rs4988235", "section": "styl_zycia", "icon": "🥛",
