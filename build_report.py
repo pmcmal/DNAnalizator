@@ -7,13 +7,15 @@ from variants_db import PLAIN_ADVICE
 RISK_ORDER = {
     "wysokie": 0, "podwyzszone": 1, "lekko podwyzszone": 2,
     "lekko podwyzszone ryzyko niedoboru": 2, "umiarkowane": 2,
-    "nosiciel": 3, "info": 4, "standardowe": 5,
+    "nosiciel": 3, "info": 4, "info_pomiar_nizszy": 4, "info_pomiar_wyzszy": 4,
+    "standardowe": 5,
     "nieznany": 6, "brak_odczytu": 7, "brak_danych": 8,
 }
 RISK_LABEL = {
     "wysokie": "Wysokie ryzyko", "podwyzszone": "Podwyzszone ryzyko",
     "lekko podwyzszone": "Lekko podwyzszone", "lekko podwyzszone ryzyko niedoboru": "Lekko podwyzszone",
     "umiarkowane": "Umiarkowane", "nosiciel": "Nosiciel", "info": "Informacyjne",
+    "info_pomiar_nizszy": "Mozliwy nizszy pomiar", "info_pomiar_wyzszy": "Mozliwy wyzszy pomiar",
     "standardowe": "Standardowe / typowe", "nieznany": "Nieopisany genotyp",
     "brak_odczytu": "Brak odczytu", "brak_danych": "Brak danych na chipie",
 }
@@ -21,6 +23,7 @@ RISK_CLASS = {
     "wysokie": "risk-high", "podwyzszone": "risk-high",
     "lekko podwyzszone": "risk-mid", "lekko podwyzszone ryzyko niedoboru": "risk-mid",
     "umiarkowane": "risk-mid", "nosiciel": "risk-mid", "info": "risk-info",
+    "info_pomiar_nizszy": "risk-info", "info_pomiar_wyzszy": "risk-info",
     "standardowe": "risk-ok", "nieznany": "risk-muted",
     "brak_odczytu": "risk-muted", "brak_danych": "risk-muted",
 }
@@ -126,6 +129,21 @@ body{
 .v-name{ font-weight: 600; font-size: 14.5px; }
 .v-gene{ font-size: 12px; color: var(--ink-soft); font-family: ui-monospace, "SF Mono", Consolas, monospace; }
 .v-desc{ font-size: 13.5px; color: var(--ink-soft); }
+.standard-label{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft);
+  margin-top: 14px; margin-bottom: 6px;
+}
+.variant-list-compact{ display:flex; flex-direction:column; gap: 4px; }
+.variant-standard{
+  padding: 6px 12px; grid-template-columns: 1fr auto; align-items: center; gap: 8px;
+}
+.variant-standard .v-heading{ margin-bottom: 0; }
+.variant-standard .v-name{ font-size: 12.5px; font-weight: 500; color: var(--ink-soft); }
+.variant-standard .v-gene{ display: none; }
+.variant-standard .v-side{ flex-direction: row; align-items: center; gap: 8px; }
+.variant-standard .rsid{ display: none; }
+.variant-standard .badge{ font-size: 10px; padding: 2px 7px; }
+.variant-standard .genotype{ font-size: 11.5px; }
 .v-note{ font-size: 12px; color: var(--ink-soft); margin-top: 6px; font-style: italic; opacity: .85; }
 .v-side{ display:flex; flex-direction: column; align-items: flex-end; gap: 6px; text-align:right; }
 .badge{
@@ -183,20 +201,34 @@ def render_apoe(apoe):
       <p class="apoe-body">{esc(apoe["interpretation"])}</p>
     </div>'''
 
+SEVERE_RISK = {"wysokie", "podwyzszone"}
+STANDARD_RISK = {"standardowe", "nieznany"}
+# wszystko inne (info, lekko podwyzszone, umiarkowane, nosiciel, info_pomiar_*, brak_odczytu) = "srednie"
+
+def risk_tier(risk):
+    if risk in SEVERE_RISK:
+        return "severe"
+    if risk in STANDARD_RISK:
+        return "standard"
+    return "medium"
+
 def render_variant_row(r):
     risk = r["risk"]
+    tier = risk_tier(risk)
     cls = RISK_CLASS.get(risk, "risk-muted")
     label = RISK_LABEL.get(risk, risk)
     genotype = r["genotype"] if r["genotype"] else "—"
-    note = f'<div class="v-note">{esc(r["note"])}</div>' if r.get("note") else ""
+    # powazne: pelny opis + notatka. srednie: sam opis (polowicznie). standardowe: bez opisu (krotko).
+    desc = f'<div class="v-desc">{esc(r["desc"])}</div>' if tier != "standard" else ""
+    note = f'<div class="v-note">{esc(r["note"])}</div>' if r.get("note") and tier == "severe" else ""
     return f'''
-        <div class="variant">
+        <div class="variant variant-{tier}">
           <div class="v-main">
             <div class="v-heading">
               <span class="v-name">{esc(r["name"])}</span>
               <span class="v-gene">{esc(r["gene"])}</span>
             </div>
-            <div class="v-desc">{esc(r["desc"])}</div>
+            {desc}
             {note}
           </div>
           <div class="v-side">
@@ -207,14 +239,26 @@ def render_variant_row(r):
         </div>'''
 
 def render_category(cat, rows):
-    rows_sorted = sorted(rows, key=lambda r: RISK_ORDER.get(r["risk"], 9))
-    body = "\n".join(render_variant_row(r) for r in rows_sorted)
+    severe = [r for r in rows if risk_tier(r["risk"]) == "severe"]
+    medium = [r for r in rows if risk_tier(r["risk"]) == "medium"]
+    standard = [r for r in rows if risk_tier(r["risk"]) == "standard"]
+    for group in (severe, medium, standard):
+        group.sort(key=lambda r: RISK_ORDER.get(r["risk"], 9))
+
+    body = "\n".join(render_variant_row(r) for r in severe + medium)
+    standard_body = "\n".join(render_variant_row(r) for r in standard)
+    standard_block = (
+        f'<div class="standard-label">Wyniki standardowe / typowe</div>'
+        f'<div class="variant-list variant-list-compact">{standard_body}</div>'
+    ) if standard else ""
+
     return f'''
       <section class="category">
         <h2>{esc(cat)}</h2>
         <div class="variant-list">
           {body}
         </div>
+        {standard_block}
       </section>'''
 
 def build_person_html(person, generated_date):
@@ -450,9 +494,8 @@ def build_simple_person_html(person, generated_date):
     naprawdę warto wiedzieć: na co uważać, co powiedzieć lekarzowi i co możesz zacząć robić
     już dziś, żeby czuć się lepiej i żyć dłużej w dobrym zdrowiu. Geny to nie wyrok — to
     najczęściej niewielkie przechylenie szali, na które masz realny wpływ przez to, co jesz,
-    ile się ruszasz i jak dbasz o siebie. Twoja rodzina chce mieć Cię przy sobie jak najdłużej
-    — dlatego ten dokument to nie straszenie, tylko konkretna, dobra wiadomość: wiesz już,
-    na czym się skupić.
+    ile się ruszasz i jak dbasz o siebie. Ten dokument to nie straszenie, tylko konkretna,
+    dobra wiadomość: wiesz już, na czym się skupić.
   </div>
 
   {content}
@@ -461,63 +504,77 @@ def build_simple_person_html(person, generated_date):
 
   <div class="footer-note">
     Pełny, szczegółowy raport techniczny (z nazwami genów i wynikami badań naukowych)
-    znajduje się w osobnym pliku — dla dzieci/rodziny, które chcą zobaczyć wszystkie
-    szczegóły. Ten dokument to jego uproszczona wersja, przygotowana z myślą o łatwym
-    wydruku na kartce A4 i czytelności dla każdego, niezależnie od wiedzy o genetyce.
+    znajduje się w osobnym pliku — dla tych, którzy chcą zobaczyć wszystkie szczegóły.
+    Ten dokument to jego uproszczona wersja, przygotowana z myślą o łatwym wydruku na
+    kartce A4 i czytelności dla każdego, niezależnie od wiedzy o genetyce.
   </div>
 </div>
 </body>
 </html>'''
 
 def render_synthesis(buckets):
-    uwaga_titles = [it["title"] for it in buckets["uwaga"]]
-    styl_titles = [it["title"] for it in buckets["styl_zycia"]]
+    all_items = buckets["uwaga"] + buckets["lekarz"] + buckets["styl_zycia"] + buckets["dobra_wiadomosc"] + buckets["ciekawostka"]
 
-    personal_bits = []
+    diet_bits = [(it["title"], it["diet"]) for it in all_items if it.get("diet")]
+    body_bits = [(it["title"], it["body_mind"]) for it in all_items if it.get("body_mind")]
+    uwaga_titles = [it["title"] for it in buckets["uwaga"]]
+
+    def render_bits(bits):
+        return "\n".join(
+            f'<div class="text"><strong>{esc(title)}:</strong> {esc(text)}</div>'
+            for title, text in bits
+        )
+
+    if diet_bits:
+        food_body = render_bits(diet_bits)
+        food_intro = "Konkretnie z Twoich wyników wynika:"
+    else:
+        food_body = ('<div class="text">Więcej warzyw, ryb, oliwy i pełnoziarnistych produktów; '
+                     'mniej cukru, słodkich napojów i wysoko przetworzonego jedzenia.</div>')
+        food_intro = "Żaden z Twoich wyników nie wskazuje tu na nic szczególnego, więc uniwersalna zasada:"
+
+    if body_bits:
+        body_body = render_bits(body_bits)
+        body_intro = "Konkretnie z Twoich wyników wynika:"
+    else:
+        body_body = ('<div class="text">Codzienny spacer (nawet 20-30 minut) daje więcej korzyści '
+                     'zdrowotnych niż większość suplementów razem wziętych.</div>')
+        body_intro = "Żaden z Twoich wyników nie wskazuje tu na nic szczególnego, więc uniwersalna zasada:"
+
+    uwaga_line = ""
     if uwaga_titles:
-        personal_bits.append(
-            "W Twoim wyniku szczególnie warto popilnować: " + ", ".join(uwaga_titles) + "."
+        uwaga_line = (
+            '<div class="item sec-lekarz"><div class="text"><strong>Priorytet numer jeden z Twoich wyników:</strong> '
+            + esc(", ".join(uwaga_titles)) + ' — to punkty z sekcji "Na co warto zwrócić uwagę" wyżej, '
+            'które najbardziej opłaca się przełożyć na konkretne działanie.</div></div>'
         )
-    if styl_titles:
-        personal_bits.append(
-            "Codzienne nawyki, na które warto zwrócić uwagę: " + ", ".join(styl_titles) + "."
-        )
-    personal_html = ""
-    if personal_bits:
-        personal_html = '<div class="item sec-lekarz"><div class="text">' + " ".join(esc(b) for b in personal_bits) + "</div></div>"
 
     return f'''
-  <h2 class="sec-title"><span class="sec-icon">🌿</span>Jak żyć długo, spokojnie i w zdrowiu</h2>
-  <p style="font-size:15.5px;">
-    Żaden gen nie decyduje samodzielnie o długości ani jakości życia — ale nauka dość dobrze
-    wie już, co naprawdę pomaga, niezależnie od wyniku testu DNA:
-  </p>
+  <h2 class="sec-title"><span class="sec-icon">🌿</span>Jak żyć długo, spokojnie i w zdrowiu — na podstawie Twoich wyników</h2>
+  {uwaga_line}
   <div class="item sec-styl">
     <div class="item-head"><span class="icon">🥗</span><span class="title">Jedzenie</span></div>
-    <div class="text">Więcej warzyw, ryb, oliwy i pełnoziarnistych produktów; mniej cukru,
-    słodkich napojów i wysoko przetworzonego jedzenia. Nie chodzi o restrykcyjną dietę —
-    wystarczy, żeby zdrowe jedzenie było w domu częściej niż niezdrowe.</div>
+    <div class="text" style="margin-bottom:6px;"><em>{food_intro}</em></div>
+    {food_body}
   </div>
   <div class="item sec-styl">
-    <div class="item-head"><span class="icon">🚶</span><span class="title">Ruch</span></div>
-    <div class="text">Codzienny spacer (nawet 20-30 minut) daje więcej korzyści zdrowotnych niż
-    większość suplementów razem wziętych — obniża ryzyko cukrzycy, chorób serca, a nawet
-    poprawia pamięć.</div>
+    <div class="item-head"><span class="icon">🚶</span><span class="title">Ruch, ciało i temperament</span></div>
+    <div class="text" style="margin-bottom:6px;"><em>{body_intro}</em></div>
+    {body_body}
   </div>
   <div class="item sec-styl">
     <div class="item-head"><span class="icon">😴</span><span class="title">Sen i spokój</span></div>
     <div class="text">Regularne godziny snu (7-8h) i mniej stresu to jedne z najlepiej
-    potwierdzonych czynników długowieczności — ważniejsze niż niejeden lek.</div>
+    potwierdzonych czynników długowieczności — niezależnie od wyniku DNA, to jedna z najlepszych
+    inwestycji w zdrowie jaką można zrobić.</div>
   </div>
   <div class="item sec-dobra">
-    <div class="item-head"><span class="icon">👨‍👩‍👧‍👦</span><span class="title">Rodzina i rozmowa</span></div>
-    <div class="text">Bliskie relacje rodzinne i towarzyskie to jeden z najsilniejszych, wielokrotnie
-    potwierdzonych czynników długiego życia — silniejszy niż wiele czynników medycznych. Czasem
-    warto też rozmawiać wprost o tym, co komu pomaga się dobrze czuć (np. czy ktoś lepiej
-    funkcjonuje w spokoju, a ktoś w ruchu i zmianie) — to ułatwia wzajemne zrozumienie, a nie
-    jest niczyją "winą".</div>
+    <div class="item-head"><span class="icon">👨‍👩‍👧‍👦</span><span class="title">Rozmowa z bliskimi</span></div>
+    <div class="text">Bliskie relacje i rozmowa to jeden z najsilniej potwierdzonych czynników długiego
+    życia. Czasem warto wprost porozmawiać o tym, co komu pomaga się dobrze czuć (np. czy ktoś lepiej
+    funkcjonuje w spokoju, a ktoś w ruchu i zmianie, patrz sekcja "Ruch, ciało i temperament" powyżej)
+    — to ułatwia wzajemne zrozumienie, a nie jest niczyją "winą".</div>
   </div>
-  {personal_html}
   <p style="font-size:14px; font-style:italic; margin-top:16px;">
     Nawet niewielka, ale trwała zmiana jednego nawyku — więcej ruchu, mniej cukru, regularny
     sen — realnie się liczy. Nie trzeba zmieniać wszystkiego naraz.

@@ -441,9 +441,9 @@ VARIANTS = [
         "rsid": "rs602662", "gene": "FUT2", "category": "Witaminy / metabolizm",
         "name": "Status 'sekretora' - wplywa na ZMIERZONY poziom witaminy B12 we krwi",
         "genotypes": {
-            "GG": ("info", "'Sekretor' - w badaniach populacyjnych zwiazany z NIZSZYM zmierzonym poziomem calkowitej witaminy B12 we krwi"),
-            "AG": ("info", "Posredni status sekretora - posredni zmierzony poziom B12"),
-            "AA": ("info", "'Nie-sekretor' - w badaniach populacyjnych zwiazany z WYZSZYM zmierzonym poziomem calkowitej witaminy B12 we krwi (srednio ok. 16-25% wyzszy)"),
+            "GG": ("info_pomiar_nizszy", "'Sekretor' - w badaniach populacyjnych zwiazany z NIZSZYM zmierzonym poziomem calkowitej witaminy B12 we krwi (efekt pomiarowy, patrz notatka)"),
+            "AG": ("standardowe", "Posredni status sekretora - typowy, posredni zmierzony poziom B12, brak szczegolnego sygnalu w ktoryms kierunku"),
+            "AA": ("info_pomiar_wyzszy", "'Nie-sekretor' - w badaniach populacyjnych zwiazany z WYZSZYM zmierzonym poziomem calkowitej witaminy B12 we krwi (srednio ok. 16-25% wyzszy, efekt pomiarowy, patrz notatka)"),
         },
         "note": "WAZNE (zweryfikowane w niezaleznym procesie badawczym, lipiec 2026): efekt dziala przez frakcje B12 zwiazana z haptokoryna (tzw. holo-haptokoryna) - czyli wplywa na WYNIK BADANIA KRWI, a NIE na biologicznie aktywna, dostepna dla komorek frakcje (holo-transkobalamina), ktora u sekretorow i nie-sekretorow jest podobna (Fedosov i wsp., Human Molecular Genetics 2017/2018). Innymi slowy: 'sekretor' (GG) moze miec NIZSZY wynik badania B12 we krwi bez faktycznego niedoboru na poziomie komorek. Popularna w internecie porada, ze 'sekretorzy' (lub nosiciele okreslonego genotypu) potrzebuja wiekszej dawki, formy podjezykowej/w zastrzykach lub metylokobalaminy - NIE ma potwierdzenia w literaturze naukowej dla tego konkretnego genu. Jesli wystepuja objawy sugerujace niedobor B12 (problemy z pamiecia, drętwienie, zmeczenie) - decyduje faktyczny wynik badania krwi (B12, kwas metylomalonowy, homocysteina), nie ten gen."
     },
@@ -610,9 +610,15 @@ PLAIN_ADVICE = [
     },
     {
         "rsid": "rs602662", "section": "lekarz", "icon": "🩺",
-        "title": "Witamina B12 — wynik badania krwi może być mylący",
-        "trigger_risks": ["info"],
-        "text": "Ten gen wpływa na to, ile wynosi standardowe badanie krwi 'witamina B12' — niezależnie od tego, ile B12 faktycznie dociera do komórek. Innymi słowy: wynik krwi może wyglądać nisko lub wysoko z powodu tego genu, a nie prawdziwego niedoboru. WAŻNE: popularna w internecie porada, że przez ten gen potrzeba większej dawki B12 albo specjalnej formy (podjęzykowa, zastrzyki, metylokobalamina) — NIE ma potwierdzenia naukowego. Jeśli występują objawy niedoboru B12 (problemy z pamięcią, dezorientacja, mrowienie/drętwienie rąk i nóg, silne zmęczenie) — najlepiej poprosić lekarza nie tylko o zwykłe B12, ale też o kwas metylomalonowy (MMA) lub homocysteinę — to dokładniej pokazuje rzeczywisty status, niezależnie od tego genu.",
+        "title": "Witamina B12 — badanie krwi może wyjść zaniżone",
+        "trigger_risks": ["info_pomiar_nizszy"],
+        "text": "Twój wynik tego genu sprawia, że standardowe badanie krwi 'witamina B12' może wyjść NIŻEJ niż faktyczny stan w komórkach — to efekt czysto pomiarowy, nie prawdziwy niedobór. Jeśli kiedyś wyjdzie niski wynik B12 przy braku objawów — warto o tym wspomnieć lekarzowi i ewentualnie dopytać o kwas metylomalonowy (MMA) lub homocysteinę, które dokładniej pokazują rzeczywisty status.",
+    },
+    {
+        "rsid": "rs602662", "section": "lekarz", "icon": "🩺",
+        "title": "Witamina B12 — badanie krwi może wyjść zawyżone",
+        "trigger_risks": ["info_pomiar_wyzszy"],
+        "text": "Twój wynik tego genu sprawia, że standardowe badanie krwi 'witamina B12' może wyjść WYŻEJ niż faktyczny stan w komórkach — czyli 'normalny' albo nawet wysoki wynik B12 z krwi NIE musi wykluczać prawdziwego niedoboru. WAŻNE: popularna w internecie porada, że taki wynik wymaga większej dawki B12 albo specjalnej formy (podjęzykowa, zastrzyki, metylokobalamina) — nie ma na to potwierdzenia naukowego. Jeśli występują objawy niedoboru B12 (problemy z pamięcią, dezorientacja, mrowienie/drętwienie rąk i nóg, silne zmęczenie) — mimo 'dobrego' wyniku krwi warto poprosić lekarza dodatkowo o kwas metylomalonowy (MMA) lub homocysteinę, bo to dokładniej pokazuje rzeczywisty status niż samo B12.",
     },
     {
         "rsid": "rs1801222", "section": "lekarz", "icon": "🩺",
