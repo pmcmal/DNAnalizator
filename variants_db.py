@@ -491,7 +491,27 @@ VARIANTS = [
             "AG": ("lekko podwyzszone", "Nosiciel jednej kopii - podwyzszone ryzyko chorob autoimmunologicznych (w tym Hashimoto, Graves-Basedow, cukrzyca typu 1, reumatoidalne zapalenie stawow, toczen)"),
             "AA": ("podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie, choc nadal rzadkie (homozygota wystepuje rzadko)"),
         },
-        "note": "Jeden z najslawniejszych i najlepiej potwierdzonych genow autoimmunologicznych u czlowieka (Bottini i wsp., Nature Genetics 2004, replikowany setki razy). Podwyzsza ryzyko calej grupy chorob autoimmunologicznych naraz (nie tylko tarczycy) - jesli w rodzinie juz wystepuje jedna choroba autoimmunologiczna, ten gen czesciowo tlumaczy dlaczego, ale NIE jest jedynym czynnikiem (dziesiatki innych genow + srodowisko). Uwaga: kierunek i sila efektu dla tego wpisu oparte na ugruntowanej wiedzy z literatury (nie byly ponownie weryfikowane w tej sesji przez zywe wyszukiwanie ze wzgledu na limit sesji) - zalecana niezalezna weryfikacja przy okazji kolejnej aktualizacji bazy."
+        "note": "Jeden z najslawniejszych i najlepiej potwierdzonych genow autoimmunologicznych u czlowieka (Bottini i wsp., Nature Genetics 2004, replikowany setki razy; kierunek niezaleznie zweryfikowany lipiec 2026, m.in. meta-analiza Immunological Investigations 2020/2021: OR~1.57 Graves, OR~1.74 Hashimoto). Podwyzsza ryzyko calej grupy chorob autoimmunologicznych naraz (nie tylko tarczycy) - jesli w rodzinie juz wystepuje jedna choroba autoimmunologiczna, ten gen czesciowo tlumaczy dlaczego, ale NIE jest jedynym czynnikiem (dziesiatki innych genow + srodowisko). Efekt wyraznie slabszy/rzadszy w populacjach azjatyckich (allel ryzyka rzadki)."
+    },
+    {
+        "rsid": "rs179247", "gene": "TSHR (receptor TSH)", "category": "Tarczyca / autoimmunologia",
+        "name": "Ryzyko choroby Gravesa-Basedowa (nadczynnosc autoimmunologiczna)",
+        "genotypes": {
+            "GG": ("standardowe", "Standardowe ryzyko choroby Gravesa-Basedowa zwiazane z tym genem"),
+            "AG": ("lekko podwyzszone", "Nosiciel jednej kopii - umiarkowanie podwyzszone ryzyko choroby Gravesa-Basedowa (ok. 1.4x)"),
+            "AA": ("podwyzszone", "Dwie kopie - wyzsze ryzyko choroby Gravesa-Basedowa (ok. 2x wg metaanaliz)"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): drugi po PTPN22/HLA najsilniej potwierdzony gen podatnosci na autoimmunologiczna chorobe tarczycy, ale dosc SWOISTY dla choroby Gravesa-Basedowa (nadczynnosc) - NIE dla Hashimoto (niedoczynnosc). Wariant wplywa na ekspresje TSHR w grasicy (tolerancja immunologiczna), nie na sama tarczyce. Brand i wsp. 2009 Hum Mol Genet; metaanalizy potwierdzaja OR~1.4-1.44."
+    },
+    {
+        "rsid": "rs231775", "gene": "CTLA4 (+49 A/G)", "category": "Tarczyca / autoimmunologia",
+        "name": "Ryzyko choroby Gravesa-Basedowa - gen wspomagajacy",
+        "genotypes": {
+            "AA": ("standardowe", "Standardowe ryzyko"),
+            "AG": ("info", "Nosiciel jednej kopii - niewielki wzrost ryzyka"),
+            "GG": ("lekko podwyzszone", "Dwie kopie - umiarkowanie podwyzszone ryzyko choroby Gravesa-Basedowa (ok. 1.5x), zwiazek z Hashimoto slabszy i niespojny miedzy badaniami"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): CTLA4 to kluczowy gen hamujacy nadmierna aktywacje limfocytow T, jeden z najwczesniej badanych genow autoimmunologicznych (obok T1D i innych chorob). Efekt wyraznie silniejszy i bardziej spojny dla Gravesa-Basedowa niz dla Hashimoto - traktowac jako gen pomocniczy/drugorzedny, nie glowny (jak PTPN22 czy TSHR)."
     },
     {
         "rsid": "rs965513", "gene": "FOXE1 (9q22.33)", "category": "Tarczyca / autoimmunologia",
@@ -501,7 +521,119 @@ VARIANTS = [
             "AG": ("lekko podwyzszone", "Nosiciel jednej kopii - umiarkowanie podwyzszone ryzyko guzkow tarczycy/raka brodawkowatego tarczycy"),
             "AA": ("podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie (ok. 1.75x na kopie allelu wg oryginalnego badania)"),
         },
-        "note": "Wariant z Gudmundsson i wsp., Nature Genetics 2009 (region 9q22.33 blisko genu FOXE1) - jeden z pierwszych i najsilniej potwierdzonych powszechnych wariantow ryzyka raka tarczycy. WAZNE: to marker OGOLNEGO, POPULACYJNEGO ryzyka - w ZADEN sposob nie moze ocenic, czy KONKRETNY, juz istniejacy i monitorowany guzek jest lagodny czy zlosliwy. O tym decyduje wylacznie USG, biopsja i ocena endokrynologa/onkologa - ten gen tego nie zastapi i nie powinien wplywac na decyzje o dalszej diagnostyce ani jej odwlekac. Uwaga: kierunek efektu oparty na ugruntowanej wiedzy z literatury (nie byl ponownie weryfikowany w tej sesji przez zywe wyszukiwanie ze wzgledu na limit sesji) - zalecana niezalezna weryfikacja przy okazji kolejnej aktualizacji bazy."
+        "note": "Wariant z Gudmundsson i wsp., Nature Genetics 2009 (region 9q22.33 blisko genu FOXE1) - jeden z pierwszych i najsilniej potwierdzonych powszechnych wariantow ryzyka raka tarczycy (kierunek niezaleznie zweryfikowany lipiec 2026, m.in. przez oryginalna prace + wielokrotne metaanalizy, OR per-allel ~1.6-1.8, AA vs GG ~2.8x). WAZNE: to marker OGOLNEGO, POPULACYJNEGO ryzyka - w ZADEN sposob nie moze ocenic, czy KONKRETNY, juz istniejacy i monitorowany guzek jest lagodny czy zlosliwy (90-95% guzkow tarczycy jest lagodnych niezaleznie od genetyki). O tym decyduje wylacznie USG, biopsja i ocena endokrynologa/onkologa - ten gen tego nie zastapi i nie powinien wplywac na decyzje o dalszej diagnostyce ani jej odwlekac."
+    },
+    {
+        "rsid": "rs944289", "gene": "PTCSC3 / NKX2-1 (14q13.3)", "category": "Tarczyca / autoimmunologia",
+        "name": "Ryzyko raka brodawkowatego tarczycy - drugi, niezalezny locus",
+        "genotypes": {
+            "CC": ("standardowe", "Standardowe ryzyko"),
+            "CT": ("lekko podwyzszone", "Nosiciel jednej kopii - podwyzszone ryzyko raka brodawkowatego tarczycy (~1.37x na kopie)"),
+            "TT": ("podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): drugi (obok FOXE1/rs965513) z dwoch pierwszych i najsilniej potwierdzonych wariantow ryzyka raka tarczycy z tego samego badania (Gudmundsson i wsp. 2009), ale w INNYM regionie genomu (niezalezny sygnal) - mechanizm: allel ryzyka wycisza dzialanie genu PTCSC3 (hamujacego wzrost komorek tarczycy) - Jendrzejewski i wsp. 2012, PNAS. Podobnie jak FOXE1 - to marker populacyjnego ryzyka, nie diagnoza istniejacego guzka."
+    },
+
+    # ---------------- NOWOTWORY - WARIANTY POSPOLITE (male efekty, NIE rzadkie mutacje typu BRCA) ----------------
+    {
+        "rsid": "rs6983267", "gene": "8q24 (blisko MYC)", "category": "Nowotwory",
+        "name": "Wspolny wariant ryzyka raka jelita grubego i prostaty",
+        "genotypes": {
+            "TT": ("standardowe", "Standardowe ryzyko"),
+            "GT": ("lekko podwyzszone", "Nosiciel jednej kopii - niewielki wzrost ryzyka (~1.15-1.2x)"),
+            "GG": ("lekko podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie, ale nadal niewielki efekt (~1.3-1.5x)"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): jeden z najlepiej powtarzalnych 'pospolitych' wariantow nowotworowych (Nature Genetics 2007, region wzmacniacza Wnt regulujacego MYC), efekt bardzo maly. NIE zmienia standardowych zalecen przesiewowych (kolonoskopia wg wieku/wywiadu rodzinnego, PSA wg wytycznych urologicznych) - to nie jest zespol dziedzicznego raka jak BRCA."
+    },
+    {
+        "rsid": "rs10993994", "gene": "MSMB", "category": "Nowotwory",
+        "name": "Wariant ryzyka raka prostaty",
+        "genotypes": {
+            "CC": ("standardowe", "Standardowe (nizsze w tej grupie) ryzyko - wyzsza ekspresja bialka MSMB (ochronnego)"),
+            "CT": ("lekko podwyzszone", "Nosiciel jednej kopii - umiarkowany wzrost ryzyka (~1.2-1.3x)"),
+            "TT": ("lekko podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie (~1.6x), nizsza ekspresja bialka ochronnego MSMB"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): Thomas/Eeles i wsp., Nature Genetics 2008, potwierdzone funkcjonalnie. Male ryzyko populacyjne, NIE zespol dziedziczny - decyzje o PSA/biopsji nadal wg standardowych wytycznych wiekowych, nie tego genu."
+    },
+    {
+        "rsid": "rs2981582", "gene": "FGFR2", "category": "Nowotwory",
+        "name": "Wariant ryzyka raka piersi (najlepiej potwierdzony pospolity wariant tego typu)",
+        "genotypes": {
+            "GG": ("standardowe", "Standardowe (nizsze w tej grupie) ryzyko"),
+            "AG": ("lekko podwyzszone", "Nosiciel jednej kopii - umiarkowany wzrost ryzyka (~1.2-1.3x), silniejszy dla rakow z receptorem estrogenowym dodatnim"),
+            "AA": ("podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie (~1.3-1.6x)"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): Easton i wsp., Nature 2007 - jeden z pierwszych i najlepiej powtarzalnych pospolitych wariantow raka piersi, potwierdzony funkcjonalnie (zwiekszona ekspresja FGFR2). WAZNE: efekt jest DUZO mniejszy niz rzadkie, wysoko-penetrujace mutacje BRCA1/BRCA2 (ktore nie sa mierzone na tym chipie - patrz uwaga w sekcji Nowotwory wyzej) i NIE powinien zmieniac czestotliwosci mammografii ani innych decyzji przesiewowych - o tym decyduja standardowe wytyczne (wiek, wywiad rodzinny, potwierdzone mutacje BRCA/PALB2 itp.)."
+    },
+
+    # ---------------- WZROK ----------------
+    {
+        "rsid": "rs10490924", "gene": "ARMS2/HTRA1 (10q26)", "category": "Wzrok",
+        "name": "Zwyrodnienie plamki zoltej zwiazane z wiekiem (AMD) - jeden z dwoch glownych loci",
+        "genotypes": {
+            "GG": ("standardowe", "Standardowe (nizsze w tej grupie) ryzyko AMD"),
+            "GT": ("lekko podwyzszone", "Nosiciel jednej kopii - podwyzszone ryzyko AMD (~2.7-3.1x)"),
+            "TT": ("podwyzszone", "Dwie kopie - znaczaco podwyzszone ryzyko AMD, zwlaszcza zaawansowanej postaci (~8-9x)"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): jeden z dwoch glownych loci AMD (obok CFH/rs1061170, ktory NIE jest mierzony na tym chipie - obraz czesciowy). AMD to wiodaca przyczyna utraty wzroku po 55-60 roku zycia. Przy podwyzszonym ryzyku (zwlaszcza u palaczy - palenie i ten gen wspoldzialaja mnozac ryzyko): regularne, rozszerzone badanie dna oka od 50-60 roku zycia, bezwzgledne rzucenie palenia, przy juz zdiagnozowanym wczesnym AMD - suplementacja AREDS2 (witamina C, E, cynk, miedz, luteina/zeaksantyna) ma potwierdzone dowody spowalniania progresji, samokontrola siatki Amslera przy rozpoznanym posrednim AMD."
+    },
+
+    # ---------------- KOSCI / STAWY ----------------
+    {
+        "rsid": "rs143383", "gene": "GDF5", "category": "Kosci / stawy",
+        "name": "Choroba zwyrodnieniowa stawow (artroza biodra/kolana, mozliwy zwiazek ze zmianami w stawach stop)",
+        "genotypes": {
+            "GG": ("standardowe", "Standardowe (nizsze w tej grupie) ryzyko choroby zwyrodnieniowej stawow"),
+            "AG": ("lekko podwyzszone", "Nosiciel jednej kopii - niewielko podwyzszone ryzyko (~1.15-1.2x)"),
+            "AA": ("lekko podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie, ale nadal niewielki efekt (~1.2-1.3x); nizsza ekspresja GDF5 w chrzastce (do ok. 27% mniej)"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): jeden z najlepiej i najczesciej potwierdzonych wariantow choroby zwyrodnieniowej stawow (artrozy) na swiecie (Southam/Miyamoto i wsp. 2007, potwierdzone funkcjonalnie i w UK Biobank). WAZNE w kontekscie bolesnych zmian/narosli na stawach (np. palcow stop): to bardziej pasuje do artrozy niz do dny moczanowej (patrz kategoria Dna moczanowa/stawy wyzej) - jesli genetyka dny wyszla neutralnie, a ten wariant podwyzszony, artroza jest bardziej prawdopodobnym wyjasnieniem. Efekt niewielki, ale realny czynnik ryzyka to przede wszystkim waga ciala (obciazenie stawow) i regularny, niskoudarowy ruch (plywanie, rower) wzmacniajacy miesnie wokol stawow - to ma wiekszy wplyw niz ten gen."
+    },
+
+    # ---------------- MIGRENA / SEN ----------------
+    {
+        "rsid": "rs1835740", "gene": "MTDH (8q22.1)", "category": "Neurologia / metabolizm",
+        "name": "Podatnosc na migrene",
+        "genotypes": {
+            "CC": ("standardowe", "Standardowe ryzyko migreny"),
+            "CT": ("lekko podwyzszone", "Nosiciel jednej kopii - niewielko podwyzszone ryzyko migreny"),
+            "TT": ("lekko podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie, ale efekt nadal niewielki (~1.18-1.23x)"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): pierwszy wariant migreny potwierdzony na poziomie calego genomu (Anttila i wsp., Nature Genetics 2010), ale efekt niewielki i replikacja niejednolita w niektorych populacjach. Nie okresla typu migreny (z aura czy bez) ani jej ciezkosci - postepowanie (unikanie wyzwalaczy, leczenie) takie samo niezaleznie od wyniku."
+    },
+    {
+        "rsid": "rs3923809", "gene": "BTBD9", "category": "Sen",
+        "name": "Zespol niespokojnych nog (RLS)",
+        "genotypes": {
+            "GG": ("standardowe", "Standardowe (nizsze w tej grupie) ryzyko zespolu niespokojnych nog"),
+            "AG": ("lekko podwyzszone", "Nosiciel jednej kopii - podwyzszone ryzyko (~1.5-1.6x)"),
+            "AA": ("lekko podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie (~1.7-1.9x); allel A jest powszechny (70-80% populacji ma co najmniej jedna kopie), wiec sam wynik ma niska wartosc predykcyjna indywidualnie"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): najlepiej potwierdzony gen zespolu niespokojnych nog (Stefansson i wsp. 2007). To NIE jest diagnoza - RLS rozpoznaje sie klinicznie (przymus poruszania nogami, gorszy w spoczynku/wieczorem, ustepuje przy ruchu). Jesli objawy wystepuja: RLS jest silnie zwiazany z niedoborem zelaza/ferrytyny - warto sprawdzic ferrytyne, jej uzupelnienie czesto lagodzi objawy."
+    },
+
+    # ---------------- WLOSY ----------------
+    {
+        "rsid": "rs1160312", "gene": "PAX1/FOXA2 (20p11, autosomalny)", "category": "Cechy fizyczne",
+        "name": "Lysienie androgenowe (typu meskiego) - drugi, niezalezny locus (obok AR na chromosomie X)",
+        "genotypes": {
+            "GG": ("standardowe", "Standardowe (nizsze w tej grupie) ryzyko lysienia androgenowego"),
+            "AG": ("info", "Nosiciel jednej kopii - podwyzszone ryzyko (~1.6x)"),
+            "AA": ("lekko podwyzszone", "Dwie kopie - najwyzsze ryzyko w tej grupie (~2.6x)"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): Richards i wsp., Nature Genetics 2008 - drugi, w pelni niezalezny (od genu AR na chromosomie X, ktory nie jest mierzony na tym chipie) locus lysienia typu meskiego, dziala addytywnie z AR. Lysienie androgenowe jest silnie poligenowe (dziesiatki loci) - podwyzszony wynik nie jest wyrokiem, standardowe leczenie (finasteryd, minoksydyl) dziala niezaleznie od genotypu."
+    },
+
+    # ---------------- KREW / ZELAZO ----------------
+    {
+        "rsid": "rs855791", "gene": "TMPRSS6", "category": "Witaminy / metabolizm",
+        "name": "Skłonnosc do niedokrwistosci z niedoboru zelaza (odwrotnosc hemochromatozy)",
+        "genotypes": {
+            "GG": ("standardowe", "Standardowe (korzystniejsze w tej grupie) wyniki hemoglobiny/zelaza"),
+            "AG": ("info", "Posredni poziom hemoglobiny/zelaza"),
+            "AA": ("lekko podwyzszone", "Nieco nizsza typowa hemoglobina/zelazo we krwi - lekko podwyzszona sklonnosc do niedokrwistosci z niedoboru zelaza, zwlaszcza przy obfitych miesiaczkach, diecie wegetarianskiej/weganskiej lub czestym oddawaniu krwi"),
+        },
+        "note": "Zweryfikowane niezaleznie (lipiec 2026): jeden z najlepiej potwierdzonych genow statusu zelaza (Benyamin/Chambers i wsp., Nature Genetics 2009). To lagodny modyfikator, nie diagnoza - przy niewyjasnionym zmeczeniu/bladosci warto od czasu do czasu sprawdzic ferrytyne i morfologie (CBC), zwlaszcza przy dodatkowych czynnikach (miesiaczka, dieta, oddawanie krwi)."
     },
 ]
 
@@ -638,6 +770,13 @@ PLAIN_ADVICE = [
         "title": "Dna moczanowa (kwas moczowy)",
         "trigger_risks": ["standardowe"],
         "text": "To najsilniejszy powszechny gen ryzyka dny moczanowej — i wynik jest tu korzystny (standardowe ryzyko). Jeśli występują bolesne zmiany/narośla na stawach palców (zwłaszcza stóp), to na podstawie samej genetyki dna moczanowa jest mniej prawdopodobnym wyjaśnieniem niż np. choroba zwyrodnieniowa stawów — ale to nadal wymaga oceny lekarza/reumatologa i najlepiej prostego badania krwi (poziom kwasu moczowego), a nie zgadywania.",
+    },
+    {
+        "rsid": "rs143383", "section": "uwaga", "icon": "🦶",
+        "title": "Choroba zwyrodnieniowa stawów (artroza)",
+        "trigger_risks": ["lekko podwyzszone"],
+        "text": "Ten gen (jeden z najlepiej potwierdzonych na świecie dla artrozy) pokazuje podwyższone ryzyko choroby zwyrodnieniowej stawów. Jeśli występują bolesne zmiany/narośla na stawach (np. palców stóp, kolan, bioder) — to na podstawie genetyki artroza jest bardziej prawdopodobnym wyjaśnieniem niż dna moczanowa. Efekt tego genu jest niewielki — dużo większe znaczenie ma masa ciała (mniejsze obciążenie stawów) i regularny, niskoudarowy ruch (pływanie, rower, spacery) wzmacniający mięśnie wokół stawów.",
+        "diet": "Utrzymanie prawidłowej wagi ciała odciąża stawy najbardziej ze wszystkiego. Kwasy omega-3 (ryby) bywają pomocne przy odczuwaniu sztywności/bólu stawów jako uzupełnienie, nie zamiast ruchu.",
     },
     {
         "rsid": "rs2231142", "section": "uwaga", "icon": "🦴",
