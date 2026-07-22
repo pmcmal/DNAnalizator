@@ -213,3 +213,7 @@ Aby dodać nowy wariant, dopisz wpis do listy `VARIANTS` w `variants_db.py`:
 ```
 
 </details>
+
+---
+
+Stworzył Paweł Malec ® · [GitHub](https://github.com/pmcmal) · [tipped.pl/pmcmalec](https://tipped.pl/pmcmalec)
