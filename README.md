@@ -29,7 +29,7 @@ data) — **never commit them to the repository**, especially a public one.
 This repo's `.gitignore` excludes by default:
 
 - `*.zip` (downloaded AncestryDNA/23andMe archives)
-- `mama/`, `tata/` (folders with unpacked raw data)
+- `mum/`, `dad/` (folders with unpacked raw data)
 - `report_data.json`, `raport_*.html` (generated results)
 
 Keep your DNA data and generated reports strictly local.
@@ -49,9 +49,28 @@ Keep your DNA data and generated reports strictly local.
 
 ## Usage
 
+### Option A: desktop app (no Python required)
+
+`gui_app.py` is a small Tkinter GUI: pick your DNA file (`.txt` or the downloaded
+`.zip`, unpacked automatically), pick an output folder (defaults to your Desktop),
+and click **Generate**. It writes both the full and simplified HTML reports and,
+if Edge or Chrome is installed (virtually always true on Windows), also saves a
+PDF straight away by driving the browser's headless print-to-PDF — no separate
+PDF library needed.
+
+Build a standalone `.exe` that doesn't need Python installed on the target machine:
+
 ```bash
-# 1. Unzip the downloaded AncestryDNA archive into a folder, e.g. mama/ and tata/
-unzip dna-data-*.zip -d mama
+pip install pyinstaller
+pyinstaller --onefile --windowed --name DNAnalizator gui_app.py
+# -> dist/DNAnalizator.exe
+```
+
+### Option B: command line
+
+```bash
+# 1. Unzip the downloaded AncestryDNA archive into a folder, e.g. mum/ and dad/
+unzip dna-data-*.zip -d mum
 
 # 2. Run the analysis (edit the list of people/paths in analyze.py if needed)
 python analyze.py
@@ -136,6 +155,25 @@ Trzymaj swoje dane DNA i wygenerowane raporty wyłącznie lokalnie.
    per osoba (`raport_<osoba>.html`).
 
 ## Użycie
+
+### Opcja A: aplikacja z GUI (bez potrzeby instalowania Pythona)
+
+`gui_app.py` to prosty interfejs (Tkinter): wybierasz plik z danymi DNA (`.txt`
+albo pobrany `.zip` — rozpakuje się sam), wybierasz folder na wynik (domyślnie
+Pulpit) i klikasz **Generuj raport**. Powstają oba raporty HTML, a jeśli na
+komputerze jest Edge lub Chrome (praktycznie zawsze na Windows), od razu też
+gotowe PDF-y — przeglądarka w trybie headless sama drukuje do PDF, bez
+dodatkowej biblioteki.
+
+Budowa samodzielnego pliku `.exe` (nie wymaga Pythona na komputerze docelowym):
+
+```bash
+pip install pyinstaller
+pyinstaller --onefile --windowed --name DNAnalizator gui_app.py
+# -> dist/DNAnalizator.exe
+```
+
+### Opcja B: linia poleceń
 
 ```bash
 # 1. Rozpakuj pobrane archiwum AncestryDNA do folderu np. mama/ i tata/
