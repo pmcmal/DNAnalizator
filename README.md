@@ -1,5 +1,8 @@
 # DNAnalizator
 
+<img width="573" height="395" alt="Zrzut ekranu 2026-07-22 150714" src="https://github.com/user-attachments/assets/2506f16e-ed3f-44cf-baea-447276493dbe" />
+
+
 <details>
 <summary><strong>🇬🇧 English</strong> (click to expand)</summary>
 
